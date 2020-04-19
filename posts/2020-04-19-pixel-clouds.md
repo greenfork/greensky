@@ -6,4 +6,4 @@ date: "2020-04-19"
 
 Let's start by directly looking at the resulted image:
 
-![pixel clouds](http://imagelink)
+![pixel clouds](https://github.com/greenfork/greensky/blob/master/assets/images/pixel_clouds_attempt.png)
