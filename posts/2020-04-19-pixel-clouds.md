@@ -10,7 +10,9 @@ Not me.
 Let's start by directly looking at the resulted image:
 
 <br>
+
 ![pixel clouds](../assets/images/pixel_clouds_attempt.png)
+
 <br>
 
 Do you see it? It is magnificent.
