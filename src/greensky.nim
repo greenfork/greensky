@@ -7,9 +7,11 @@ import markdown
 
 include "layout.html"
 include "index.html"
+include "post.html"
 
 type
-  Post = tuple[path, title, date: string]
+  Post = tuple[path, title, date, content: string]
+    ## representation of markdown file
 
 const datePattern = re"(?P<date>\d\d\d\d-\d\d-\d\d)"
 
@@ -19,14 +21,6 @@ func humanize(str: string): string =
     .strip(chars = Whitespace + { '_', '-' })
     .multiReplace(("_", " "), ("-", " "))
     .capitalizeAscii()
-
-proc genPageHtml(path: string): string =
-  let fileInfo = splitFile(path)
-  genLayoutHtml(fileInfo.name.humanize, readFile(path))
-
-proc genPostHtml(path: string): string =
-  let fileInfo = splitFile(path)
-  genLayoutHtml(fileInfo.name.humanize, markdown(readFile(path)))
 
 proc main =
   ## Requires the following structure in the current folder:
@@ -46,7 +40,9 @@ proc main =
     if kind != pcFile: continue
     let filename = extractFilename(path)
     let dest = "docs"/filename
-    writeFile(dest, genPageHtml(path))
+    let fileInfo = splitFile(path)
+    let content = genLayoutHtml(fileInfo.name.humanize, readFile(path))
+    writeFile(dest, content)
     echo "Generated ", dest.rfCyan3
 
   var posts: seq[Post]
@@ -60,13 +56,16 @@ proc main =
     var
       match: RegexMatch
     assert(fileInfo.name.find(datePattern, match), "Date must exist in file name")
-    writeFile(dest, genPostHtml(path))
-    posts.add(
-      (name,
-       fileInfo.name.humanize,
-       match.groupFirstCapture("date", fileInfo.name)
-      )
+    let markdown = markdown(readFile(path))
+    let post = (
+      path: name,
+      title: fileInfo.name.humanize,
+      date: match.groupFirstCapture("date", fileInfo.name),
+      content: markdown,
     )
+    let postHtml = genPostHtml(post)
+    writeFile(dest, genLayoutHtml(post.title, postHtml))
+    posts.add post
     echo "Generated ", dest.rfTurquoise2
 
   posts.sort do (x, y: Post) -> int:

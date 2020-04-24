@@ -1,1 +1,96 @@
+@font-face {
+  font-family: 'AronGrotesque';
+  src: url('fonts/aron-grotesque.regular-webfont.woff2') format('woff2'),
+       url('fonts/aron-grotesque.regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'AronGrotesque';
+  src: url('fonts/aron-grotesque.bold-webfont.woff2') format('woff2'),
+       url('fonts/aron-grotesque.bold-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'AronGrotesque';
+  src: url('fonts/aron-grotesque.light-webfont.woff2') format('woff2'),
+       url('fonts/aron-grotesque.light-webfont.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'AronGrotesque';
+  src: url('fonts/aron-grotesque.black-webfont.woff2') format('woff2'),
+       url('fonts/aron-grotesque.black-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: oblique;
+}
 
+@font-face {
+  font-family: 'Carlito';
+  src: url('fonts/carlito-regular-webfont.woff2') format('woff2'),
+       url('fonts/carlito-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Carlito';
+  src: url('fonts/carlito-bold-webfont.woff2') format('woff2'),
+       url('fonts/carlito-bold-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+
+}
+@font-face {
+  font-family: 'Carlito';
+  src: url('fonts/carlito-italic-webfont.woff2') format('woff2'),
+       url('fonts/carlito-italic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Carlito';
+  src: url('fonts/carlito-bolditalic-webfont.woff2') format('woff2'),
+       url('fonts/carlito-bolditalic-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: italic;
+
+}
+
+html {
+  font-size: 110%;
+}
+body {
+  color: #624B08;
+  background-color: ghostwhite;
+  font-family: Carlito, sans-serif;
+}
+a {
+  text-decoration: none;
+  color: #bb8d02;
+}
+a:hover {
+  color: #dfa800;
+}
+h1, h2, h3, h4, h5, h6, .header {
+  font-family: AronGrotesque, sans-serif;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 768px;
+}
+.subtitle-date {
+  margin-top: -1rem;
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 400;
+}
+.post {
+  padding: 10% 5% 20% 5%;
+}
+.subtitle-image {
+  font-size: 0.9rem;
+  padding-left: 0.4rem;
+}

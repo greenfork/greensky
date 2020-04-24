@@ -1,12 +1,10 @@
-# Pixel clouds
-## 2020-04-19
-
 I am no artist. But alas, here I am, drawing pixel art. Who would have thought?
 Not me.
 
 Let's start by directly looking at the resulted image:
 
-![pixel clouds](assets/images/pixel_clouds_attempt.png)
+<img class="pure-img" src="assets/images/pixel_clouds_attempt.png">
+<span class="subtitle-image">Circa 2020, colored</span>
 
 Do you see it? It is magnificent.
 

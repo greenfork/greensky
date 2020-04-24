@@ -1,7 +1,7 @@
 #? stdtmpl
-#proc genIndexHtml(posts: openArray[tuple[path, title, date: string]]): string =
+#proc genIndexHtml(posts: openArray[tuple[path, title, date, content: string]]): string =
 <ul>
-  #for (path, title, date) in posts:
+  #for (path, title, date, content) in posts:
     <li><a href="${path}">$title - $date<a></li>
   #end for
 </ul>
