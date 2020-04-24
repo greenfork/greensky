@@ -1,11 +1,15 @@
-import os
+import os, times, algorithm
 import strutils except replace
 import regex
+import rainbow
 
 import markdown
 
 include "layout.html"
 include "index.html"
+
+type
+  Post = tuple[path, title, date: string]
 
 const datePattern = re"(?P<date>\d\d\d\d-\d\d-\d\d)"
 
@@ -16,11 +20,11 @@ func humanize(str: string): string =
     .multiReplace(("_", " "), ("-", " "))
     .capitalizeAscii()
 
-proc genPage(path: string): string =
+proc genPageHtml(path: string): string =
   let fileInfo = splitFile(path)
   genLayoutHtml(fileInfo.name.humanize, readFile(path))
 
-proc genPost(path: string): string =
+proc genPostHtml(path: string): string =
   let fileInfo = splitFile(path)
   genLayoutHtml(fileInfo.name.humanize, markdown(readFile(path)))
 
@@ -30,20 +34,23 @@ proc main =
   ##   * page1.html
   ##   * page2.html
   ## * posts/
-  ##   * post1.md
-  ##   * post2.md
+  ##   * yyyy-mm-dd-post1.md
+  ##   * yyyy-mm-dd-post2.md
   ##
   ## There will be an index.html page generated with all the posts and any
   ## additional pages in the pages/ directory.
+
+  var t0 = cpuTime()
 
   for kind, path in walkDir("pages", checkDir = true):
     if kind != pcFile: continue
     let filename = extractFilename(path)
     let dest = "docs"/filename
-    writeFile(dest, genPage(path))
-    echo "Generated ", dest
+    writeFile(dest, genPageHtml(path))
+    echo "Generated ", dest.rfCyan3
 
-  var posts: seq[tuple[path, title, date: string]]
+  var posts: seq[Post]
+
   for kind, path in walkDir("posts", checkDir = true):
     if kind != pcFile: continue
     let
@@ -53,18 +60,23 @@ proc main =
     var
       match: RegexMatch
     assert(fileInfo.name.find(datePattern, match), "Date must exist in file name")
-    writeFile(dest, genPost(path))
+    writeFile(dest, genPostHtml(path))
     posts.add(
       (name,
        fileInfo.name.humanize,
        match.groupFirstCapture("date", fileInfo.name)
       )
     )
-    echo "Generated ", dest
+    echo "Generated ", dest.rfTurquoise2
+
+  posts.sort do (x, y: Post) -> int:
+    cmp(y.date, x.date) # Descending order.
 
   writeFile(
     "docs"/"index.html",
     genLayoutHtml("Home", genIndexHtml(posts))
   )
+
+  echo "Finished in ", $(cpuTime() - t0), " seconds"
 
 main()
