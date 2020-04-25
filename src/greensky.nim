@@ -22,8 +22,16 @@ func humanize(str: string): string =
     .multiReplace(("_", " "), ("-", " "))
     .capitalizeAscii()
 
-# Time of reading and writing to a file is 300us
-# Time for doing all the stuff in this file without markdown parsing is 850us
+# Testing with 1 file
+# plain reading and writing to a file - 300us
+# no markdown processing - 850us
+# with markdown processing - 16ms
+#
+# Testing with 9k files
+# with markdown with output - 216s
+# with markdown no output - 222s
+# no markdown no output - 1.45s
+# no markdown with output - 1.71s
 proc main =
   ## Requires the following structure in the current folder:
   ## * pages/
