@@ -33,8 +33,8 @@ but they are way to complex (and written in PHP) which leaves a lot of
 possibilities to all sorts of defects.
 
 Options 3 and 4 are much simpler. Writing everything straight in html is the
-simplest solution of all. You just write a bunch of tags `<h1>Tags</h1>` and
-some more `<ul><li>More</li><li>Is this <i>enough</i>?</li></ul>` and more
+simplest solution of all. You just write a bunch of tags: `<h1>Tags</h1>` - and
+some more: `<ul><li>More</li><li>Is this <i>enough</i>?</li></ul>` - and more
 and as a result you get something like the following:
 
 ```html
@@ -53,6 +53,9 @@ and as a result you get something like the following:
         <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css">
     <!--<![endif]-->
 
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/lightfair.min.css">
+
     <link rel="stylesheet" href="assets/greensky_style.css">
   </head>
   <body>
@@ -64,10 +67,19 @@ and as a result you get something like the following:
         <li><b>Please</b> make it <del>stop</del><ins>continue</ins></li>
       </ul>
     </div>
+    <script src="assets/highlight/highlight.pack.js"></script>
+    <!--
+    <script>
+      // This code shouldn't be commented but it gets eaten by a highlighter
+      // otherwise.
+      // https://github.com/highlightjs/highlight.js/issues/2504
+      hljs.initHighlightingOnLoad();
+    </script>
+    -->
   </body>
 </html>
 ```
-
+https://github.com/highlightjs/highlight.js/issues/2504
 which renders to something like this:
 
 <blockquote>

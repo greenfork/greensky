@@ -1,5 +1,29 @@
-Asset - a piece of data used by code. Library - a reusable piece of code. Here
-is the list of assets and libraries used by this blog.
+<!DOCTYPE html>
+<html>
+<head>
+<title>Techstack · Greensky</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+<!--[if lte IE 8]>
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-old-ie-min.css">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css">
+<!--<![endif]-->
+
+<link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/lightfair.min.css">
+
+<link rel="stylesheet" href="assets/greensky_style.css">
+</head>
+<body>
+<div class="container">
+      Library - a reusable piece of code. Asset - a piece of data used by code. Here
+is the list of assets and libraries used by this blog. Additionally the
+source code of this blog is available at
+<a href="https://github.com/greenfork/greensky">github</a>.
 
 <h3>Backend</h3>
 <a href="https://nim-lang.org/">Nim</a> is the language used to build this site.
@@ -29,3 +53,14 @@ a touch of design and responsiveness
 <a href="https://highlightjs.org/">highlight.js</a> - pretty much all-included
 solution for code highlighting with a ton of supported languages and different
 themes
+
+<h3>Hosting</h3>
+<a href="https://pages.github.com/">GitHub pages</a> - simple free solution
+for hosting static content like this blog
+
+</div>
+
+<script src="assets/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
