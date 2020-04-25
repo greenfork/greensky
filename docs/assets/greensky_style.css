@@ -55,7 +55,35 @@
        url('fonts/carlito-bolditalic-webfont.woff') format('woff');
   font-weight: bold;
   font-style: italic;
+}
 
+@font-face {
+  font-family: 'JetBrainsMono';
+  src: url('fonts/JetBrainsMono-Regular.woff2') format('woff2'),
+       url('fonts/JetBrainsMono-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'JetBrainsMono';
+  src: url('fonts/JetBrainsMono-Italic.woff2') format('woff2'),
+       url('fonts/JetBrainsMono-Italic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'JetBrainsMono';
+  src: url('fonts/JetBrainsMono-Bold.woff2') format('woff2'),
+       url('fonts/JetBrainsMono-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'JetBrainsMono';
+  src: url('fonts/JetBrainsMono-Bold-Italic.woff2') format('woff2'),
+       url('fonts/JetBrainsMono-Bold-Italic.woff') format('woff');
+  font-weight: bold;
+  font-style: italic;
 }
 
 html {
@@ -66,6 +94,10 @@ body {
   background-color: ghostwhite;
   font-family: Carlito, sans-serif;
 }
+code {
+  font-family: JetBrainsMono, monospace;
+  font-size: 0.85rem;
+}
 a {
   text-decoration: none;
   color: #bb8d02;
@@ -75,6 +107,10 @@ a:hover {
 }
 h1, h2, h3, h4, h5, h6, .header {
   font-family: AronGrotesque, sans-serif;
+  color: #463605; /* a bit darker than the text in body */
+}
+ul li, ol li {
+  margin-bottom: 0.9rem;
 }
 
 .container {

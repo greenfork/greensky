@@ -66,7 +66,7 @@ proc main =
     var
       match: RegexMatch
     assert(fileInfo.name.find(datePattern, match), "Date must exist in file name")
-    let markdown = markdown(readFile(path)) # this operation takes 15ms (!)
+    let markdown = markdown(readFile(path), config=initGfmConfig()) # this operation takes 15ms (!)
     let post = (
       path: name,
       title: fileInfo.name.humanize,

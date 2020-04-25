@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>How to write a blog · Greensky</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+<!--[if lte IE 8]>
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-old-ie-min.css">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css">
+<!--<![endif]-->
+
+<link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/lightfair.min.css">
+
+<link rel="stylesheet" href="assets/greensky_style.css">
+</head>
+<body>
+<div class="container">
+      <div class="post">
+  <h1>How to write a blog</h1>
+  <h2 class="subtitle-date">2020-04-25</h2>
+  <p>And by writing a blog I don't mean writing the text. I mean, how to make it
+good-looking. And actually I'm not even going to talk about that, this is
+a programming blog afterall (HTML and CSS is not programming). I will tell you
+how to make it maintainable.</p>
+<h2>Existing solutions</h2>
+<p>Nowadays if you want to write a blog, you generally have several options:</p>
+<ol>
+<li>Software-as-a-Service (SaaS) - prominent examples are <a href="https://wordpress.org/">WordPress</a> and
+<a href="https://www.joomla.org/">Joomla</a>. The easiest solution where you just register your account and
+the site is ready to go!</li>
+<li>Do the same stuff as in 1 but use your own server for that. The code is
+open-source which means you can do that.</li>
+<li>Use a static site generator - well-known options are <a href="https://jekyllrb.com/">Jekyll</a>, <a href="https://gohugo.io/">Hugo</a> and
+<a href="https://www.gatsbyjs.org/">Gatsby</a>. &quot;Static site generator&quot; basically means that you will get only
+html pages with no user interaction whatsoever.</li>
+<li>Write everything straight in html.</li>
+</ol>
+<p>Options 1 and 2 imply that there's going to be dynamic content on the page such
+as forums, comments, contacts form. And even when there's no such content,
+people are eager to use it because it is easy.</p>
+<p>But I'm not concerned with options 1 and 2. Not to bash on any of these systems,
+but they are way to complex (and written in PHP).</p>
+<p>Options 3 and 4 are much simpler. Writing everything straight in html is the
+simplest solution of all. You just write a bunch of tags <code>&lt;h1&gt;Tags&lt;/h1&gt;</code> and
+some more <code>&lt;ul&gt;&lt;li&gt;More&lt;/li&gt;&lt;li&gt;Is this &lt;i&gt;enough&lt;/i&gt;?&lt;/li&gt;&lt;/ul&gt;</code> and more
+and as a result you get something like the following:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Stupid title · Greensky&lt;/title&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/purecss@1.0.1/build/pure-min.css&quot; integrity=&quot;sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47&quot; crossorigin=&quot;anonymous&quot;&gt;
+    &lt;!--[if lte IE 8]&gt;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/purecss@1.0.1/build/grids-responsive-old-ie-min.css&quot;&gt;
+    &lt;![endif]--&gt;
+    &lt;!--[if gt IE 8]&gt;&lt;!--&gt;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css&quot;&gt;
+    &lt;!--&lt;![endif]--&gt;
+
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;assets/greensky_style.css&quot;&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class=&quot;container&quot;&gt;
+      &lt;h1&gt;Tags&lt;/h1&gt;
+      &lt;ul&gt;
+        &lt;li&gt;More&lt;/li&gt;
+        &lt;li&gt;Is this &lt;i&gt;enough&lt;/i&gt;?&lt;/li&gt;
+        &lt;li&gt;&lt;b&gt;Please&lt;/b&gt; make it &lt;del&gt;stop&lt;/del&gt;&lt;ins&gt;continue&lt;/ins&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>which renders to something like this:</p>
+<blockquote>
+  <h1>Tags</h1>
+  <ul>
+    <li>More</li>
+    <li>Is this <i>enough</i>?</li>
+    <li><b>Please</b> make it <del>stop</del><ins>continue</ins></li>
+  </ul>
+</blockquote>
+<p>After some time the eyes are trained enough to dismiss some of that
+<del>garbage</del>tags. But it is never gone forever, it still stays there. Waiting for
+you to watch at this disgrace.</p>
+<p>And so the static site generators were born!</p>
+<h2>Static site generators</h2>
+<p>The idea behind such a generator is to produce plain html files but with less
+noise and less manual work. There are several improvements compared to plain
+writing of html:</p>
+<ol>
+<li>Templates - you <em>really</em> don't want to copy the bulk of text above every
+time you want to create a new blog post. You can just concentrate on the
+actual content of your post.</li>
+<li>Markup <del>languages</del> - <a href="https://en.wikipedia.org/wiki/HTML">HTML</a> is abbreviated as Hyper-Text Markup Language
+which just introduces some special markup syntax like tags <code>&lt;h1&gt;</code> to make
+text content richer. But this is not the only one, there are also markup
+languages like <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> or <a href="https://en.wikipedia.org/wiki/ReStructuredText">reStructuredText</a> and they look a lot nicer.
+For example, the rendered with html text above can be written in Markdown
+as:
+<pre><code class="language-md"># Tags
+
+* More
+* Is this _enough_?
+* __Please__ make it ~~stop~~&lt;ins&gt;continue&lt;/ins&gt;
+</code></pre>
+As you can see it is shorter and also allows to use html if needed
+(there's no option to underline the text in the variant of markdown I am
+using here).</li>
+</ol>
+
+</div>
+
+</div>
+
+<script src="assets/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
