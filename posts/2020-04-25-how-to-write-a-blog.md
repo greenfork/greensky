@@ -1,7 +1,7 @@
 And by writing a blog I don't mean writing the text. I mean, how to make it
 good-looking. And actually I'm not even going to talk about that, this is
 a programming blog afterall (HTML and CSS is not programming). I will tell you
-how to make it maintainable.
+how to make it fast, simple and maintainable.
 
 
 ## Existing solutions
@@ -29,7 +29,8 @@ as forums, comments, contacts form. And even when there's no such content,
 people are eager to use it because it is easy.
 
 But I'm not concerned with options 1 and 2. Not to bash on any of these systems,
-but they are way to complex (and written in PHP).
+but they are way to complex (and written in PHP) which leaves a lot of
+possibilities to all sorts of defects.
 
 Options 3 and 4 are much simpler. Writing everything straight in html is the
 simplest solution of all. You just write a bunch of tags `<h1>Tags</h1>` and
@@ -91,8 +92,8 @@ The idea behind such a generator is to produce plain html files but with less
 noise and less manual work. There are several improvements compared to plain
 writing of html:
 
-1. Templates - you *really* don't want to copy the bulk of text above every
-   time you want to create a new blog post. You can just concentrate on the
+1. Templates - you *really* don't want to copy that bulk of text above every
+   time you create a new blog post. You want to just concentrate on the
    actual content of your post.
 2. Markup ~~languages~~ - [HTML] is abbreviated as Hyper-Text Markup Language
    which just introduces some special markup syntax like tags `<h1>` to make

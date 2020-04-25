@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Assets · Greensky</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+<!--[if lte IE 8]>
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-old-ie-min.css">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css">
+<!--<![endif]-->
+
+<link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/lightfair.min.css">
+
+<link rel="stylesheet" href="assets/greensky_style.css">
+</head>
+<body>
+<div class="container">
+      Asset - a piece of data used by code. Library - a reusable piece of code. Here
+is the list of assets and libraries used by this blog.
+
+<h3>Backend</h3>
+<a href="https://nim-lang.org/">Nim</a> is the language used to build this site.
+This blog is a plain html, Nim serves a role of a
+<a href="2020-04-25-how-to-write-a-blog.html">static site generator</a>.
+Besides the standard Nim library the following libraries are used:
+<ul>
+  <li><a href="https://github.com/nitely/nim-regex">regex</a> - used instead of
+      standard <a href="https://nim-lang.org/docs/re.html">re</a> library to remove
+      external dependency on <a href="http://www.pcre.org/">PCRE</a> C library</li>
+  <li><a href="https://github.com/thebigbaron/rainbow">rainbow</a> - colored output in console</li>
+  <li><a href="https://github.com/soasme/nim-markdown">markdown</a> - transform markdown files to html</li>
+</ul>
+
+<h3>Fonts</h3>
+<ul>
+  <li><a href="https://www.1001fonts.com/aron-grotesque-font.html">Aron Grotesque</a> - headers</li>
+  <li><a href="https://www.1001fonts.com/carlito-font.html">Carlito</a> - text content</li>
+  <li><a href="https://www.1001fonts.com/jetbrains-mono-font.html">JetBrains Mono</a> - code</li>
+</ul>
+
+<h3>CSS framework</h3>
+<a href="https://purecss.io/">Pure.css</a> - lightweight simple framework with
+a touch of design and responsiveness
+
+<h3>Code highlighting</h3>
+<a href="https://highlightjs.org/">highlight.js</a> - pretty much all-included
+solution for code highlighting with a ton of supported languages and different
+themes
+
+</div>
+
+<script src="assets/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

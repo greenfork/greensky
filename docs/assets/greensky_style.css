@@ -108,6 +108,8 @@ a:hover {
 h1, h2, h3, h4, h5, h6, .header {
   font-family: AronGrotesque, sans-serif;
   color: #463605; /* a bit darker than the text in body */
+  margin-bottom: 0.8rem;
+  margin-top: 2rem;
 }
 ul li, ol li {
   margin-bottom: 0.9rem;
@@ -118,7 +120,7 @@ ul li, ol li {
   max-width: 768px;
 }
 .subtitle-date {
-  margin-top: -1rem;
+  margin-top: -0.5rem;
   font-size: 1.1rem;
   font-style: italic;
   font-weight: 400;
