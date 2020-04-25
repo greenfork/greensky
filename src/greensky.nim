@@ -22,6 +22,8 @@ func humanize(str: string): string =
     .multiReplace(("_", " "), ("-", " "))
     .capitalizeAscii()
 
+# Time of reading and writing to a file is 300us
+# Time for doing all the stuff in this file without markdown parsing is 850us
 proc main =
   ## Requires the following structure in the current folder:
   ## * pages/
@@ -56,7 +58,7 @@ proc main =
     var
       match: RegexMatch
     assert(fileInfo.name.find(datePattern, match), "Date must exist in file name")
-    let markdown = markdown(readFile(path))
+    let markdown = markdown(readFile(path)) # this operation takes 15ms (!)
     let post = (
       path: name,
       title: fileInfo.name.humanize,
