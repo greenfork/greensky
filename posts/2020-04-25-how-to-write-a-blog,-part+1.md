@@ -38,7 +38,7 @@ possibilities to all sorts of defects.
 Options 3 and 4 are much simpler. Writing everything straight in html is the
 simplest solution of all. You just write a bunch of tags: `<h1>Tags</h1>` - and
 some more: `<ul><li>More</li><li>Is this <i>enough</i>?</li></ul>` - and more,
-and as a result you get something like the following:
+and as a result you get something like the following (this is considered small):
 
 [PHP]: https://whydoesitsuck.com/why-does-php-suck/
 
