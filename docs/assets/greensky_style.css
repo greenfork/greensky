@@ -1,3 +1,5 @@
+/* AronGrotesque */
+/*****************/
 @font-face {
   font-family: 'AronGrotesque';
   src: url('fonts/aron-grotesque.regular-webfont.woff2') format('woff2'),
@@ -27,6 +29,8 @@
   font-style: oblique;
 }
 
+/* Carlito */
+/***********/
 @font-face {
   font-family: 'Carlito';
   src: url('fonts/carlito-regular-webfont.woff2') format('woff2'),
@@ -57,6 +61,8 @@
   font-style: italic;
 }
 
+/* JetBrainsMono */
+/*****************/
 @font-face {
   font-family: 'JetBrainsMono';
   src: url('fonts/JetBrainsMono-Regular.woff2') format('woff2'),
@@ -86,6 +92,7 @@
   font-style: italic;
 }
 
+
 html {
   font-size: 110%;
 }
@@ -96,7 +103,7 @@ body {
 }
 code {
   font-family: JetBrainsMono, monospace;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
 }
 a {
   text-decoration: none;
@@ -131,4 +138,26 @@ ul li, ol li {
 .subtitle-image {
   font-size: 0.9rem;
   padding-left: 0.4rem;
+}
+/* Inline code inside backticks in markdown */
+:not(pre) > code {
+  color: #730093;
+}
+
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { /*...*/ }
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  html {
+    font-size: 120%;
+  }
+}
+
+/* Medium to large devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  html {
+    font-size: 130%;
+  }
 }

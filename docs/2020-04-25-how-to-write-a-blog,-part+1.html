@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>How to write a blog · Greensky</title>
+<title>How to write a blog, part&nbsp;1 · Greensky</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -21,12 +21,14 @@
 <body>
 <div class="container">
       <div class="post">
-  <h1>How to write a blog</h1>
+  <h1>How to write a blog, part&nbsp;1</h1>
   <h2 class="subtitle-date">2020-04-25</h2>
   <p>And by writing a blog I don't mean writing the text. I mean, how to make it
 good-looking. And actually I'm not even going to talk about that, this is
 a programming blog afterall (HTML and CSS is not programming). I will tell you
 how to make it fast, simple and maintainable.</p>
+<p>This part is an introductory material, feel free to skip to part 2
+(which will be a bit later) for more technical details.</p>
 <h2>Existing solutions</h2>
 <p>Nowadays if you want to write a blog, you generally have several options:</p>
 <ol>
@@ -44,11 +46,11 @@ html pages with no user interaction whatsoever.</li>
 as forums, comments, contacts form. And even when there's no such content,
 people are eager to use it because it is easy.</p>
 <p>But I'm not concerned with options 1 and 2. Not to bash on any of these systems,
-but they are way to complex (and written in PHP) which leaves a lot of
+but they are way too complex (and written in <a href="https://whydoesitsuck.com/why-does-php-suck/">PHP</a>) which leaves a lot of
 possibilities to all sorts of defects.</p>
 <p>Options 3 and 4 are much simpler. Writing everything straight in html is the
 simplest solution of all. You just write a bunch of tags: <code>&lt;h1&gt;Tags&lt;/h1&gt;</code> - and
-some more: <code>&lt;ul&gt;&lt;li&gt;More&lt;/li&gt;&lt;li&gt;Is this &lt;i&gt;enough&lt;/i&gt;?&lt;/li&gt;&lt;/ul&gt;</code> - and more
+some more: <code>&lt;ul&gt;&lt;li&gt;More&lt;/li&gt;&lt;li&gt;Is this &lt;i&gt;enough&lt;/i&gt;?&lt;/li&gt;&lt;/ul&gt;</code> - and more,
 and as a result you get something like the following:</p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -91,8 +93,7 @@ and as a result you get something like the following:</p>
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<p>https://github.com/highlightjs/highlight.js/issues/2504
-which renders to something like this:</p>
+<p>which renders to something like this:</p>
 <blockquote>
   <h1>Tags</h1>
   <ul>
@@ -128,7 +129,18 @@ as:
 As you can see it is shorter and also allows to use html if needed
 (there's no option to underline the text in the variant of markdown I am
 using here).</li>
+<li>Cool features like <a href="https://sass-lang.com/">SASS</a> compilation, themes, internal links, <a href="https://en.wikipedia.org/wiki/Pagination">pagination</a>,
+<a href="https://en.wikipedia.org/wiki/Breadcrumb_navigation">breadcrumbs</a> and everything you would ever want to see on your site.</li>
 </ol>
+<p>But remember when I said that WordPress and Joomla are too complex? The option 3
+is what <strong>I</strong> would call complex. A <em>general</em> static site generator tries to
+appeal to <em>general</em> public and it means it should include all the features so
+that normies could use it as well as to claim that &quot;ALL features are optional&quot;
+so that <code>hackers</code> could think of it &quot;it's so cool, it's so minimal&quot;.</p>
+<p>In my personal and correct opinion I think it's wrong. Would you call yourself
+a hacker using some of this bloated software? Maybe yes and maybe you are right.
+But is this the only option? No. And I will show you the path if you are
+willing to follow. Please, wait for part 2 to come.</p>
 
 </div>
 

@@ -3,6 +3,9 @@ good-looking. And actually I'm not even going to talk about that, this is
 a programming blog afterall (HTML and CSS is not programming). I will tell you
 how to make it fast, simple and maintainable.
 
+This part is an introductory material, feel free to skip to part 2
+(which will be a bit later) for more technical details.
+
 
 ## Existing solutions
 
@@ -29,13 +32,15 @@ as forums, comments, contacts form. And even when there's no such content,
 people are eager to use it because it is easy.
 
 But I'm not concerned with options 1 and 2. Not to bash on any of these systems,
-but they are way to complex (and written in PHP) which leaves a lot of
+but they are way too complex (and written in [PHP]) which leaves a lot of
 possibilities to all sorts of defects.
 
 Options 3 and 4 are much simpler. Writing everything straight in html is the
 simplest solution of all. You just write a bunch of tags: `<h1>Tags</h1>` - and
-some more: `<ul><li>More</li><li>Is this <i>enough</i>?</li></ul>` - and more
+some more: `<ul><li>More</li><li>Is this <i>enough</i>?</li></ul>` - and more,
 and as a result you get something like the following:
+
+[PHP]: https://whydoesitsuck.com/why-does-php-suck/
 
 ```html
 <!DOCTYPE html>
@@ -79,7 +84,6 @@ and as a result you get something like the following:
   </body>
 </html>
 ```
-https://github.com/highlightjs/highlight.js/issues/2504
 which renders to something like this:
 
 <blockquote>
@@ -123,7 +127,23 @@ writing of html:
    As you can see it is shorter and also allows to use html if needed
    (there's no option to underline the text in the variant of markdown I am
    using here).
+3. Cool features like [SASS] compilation, themes, internal links, [pagination],
+   [breadcrumbs] and everything you would ever want to see on your site.
 
 [HTML]: https://en.wikipedia.org/wiki/HTML
 [reStructuredText]: https://en.wikipedia.org/wiki/ReStructuredText
 [Markdown]: https://en.wikipedia.org/wiki/Markdown
+[SASS]: https://sass-lang.com/
+[pagination]: https://en.wikipedia.org/wiki/Pagination
+[breadcrumbs]: https://en.wikipedia.org/wiki/Breadcrumb_navigation
+
+But remember when I said that WordPress and Joomla are too complex? The option 3
+is what **I** would call complex. A _general_ static site generator tries to
+appeal to _general_ public and it means it should include all the features so
+that normies could use it as well as to claim that "ALL features are optional"
+so that `hackers` could think of it "it's so cool, it's so minimal".
+
+In my personal and correct opinion I think it's wrong. Would you call yourself
+a hacker using some of this bloated software? Maybe yes and maybe you are right.
+But is this the only option? No. And I will show you the path if you are
+willing to follow. Please, wait for part 2 to come.
