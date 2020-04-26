@@ -128,14 +128,15 @@ ul li, ol li {
 }
 .subtitle-date {
   margin-top: -0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-style: italic;
   font-weight: 400;
 }
 .post {
   padding: 10% 5% 20% 5%;
+}
+.post p {
   text-align: justify;
-  text-justify: inter-character;
 }
 .subtitle-image {
   font-size: 0.9rem;
