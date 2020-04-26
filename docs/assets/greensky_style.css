@@ -134,6 +134,8 @@ ul li, ol li {
 }
 .post {
   padding: 10% 5% 20% 5%;
+  text-align: justify;
+  text-justify: inter-character;
 }
 .subtitle-image {
   font-size: 0.9rem;
