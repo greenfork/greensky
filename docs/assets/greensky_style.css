@@ -125,6 +125,10 @@ ul li, ol li {
 .container {
   margin: 0 auto;
   max-width: 768px;
+  padding-top: 5%;
+  padding-bottom: 10%;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 .subtitle-date {
   margin-top: -0.5rem;
@@ -133,7 +137,8 @@ ul li, ol li {
   font-weight: 400;
 }
 .post {
-  padding: 10% 5% 20% 5%;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 .post p {
   text-align: justify;
