@@ -12,7 +12,7 @@ This is a famous phrase in [UNIX] world. In UNIX-like systems
 that do one thing and that are able to communicate with each other using pipes
 `|`. A short example would be most useful:
 
-```bash
+```shell
 $ ls posts/ | cut -d - -f 1-3 | sort | xargs -I {} date -d {} +%A
 ```
 
@@ -329,7 +329,11 @@ import markdown
 let markdown = markdown(readFile("/path/to/file"), config=initGfmConfig())
 ```
 
-Alright, the variable `markdown` has all the html we need. Cool.
+Here `"/path/to/file"` should be a path to a file with your markdown text.
+You can have a look at this exact post in [raw markdown].
+Now, the variable `markdown` has all the html we need. Cool.
+
+[raw markdown]: https://raw.githubusercontent.com/greenfork/greensky/master/posts/2020-05-10-how-to-write-a-blog%2C-part%2B2.md
 
 ## And done!
 
