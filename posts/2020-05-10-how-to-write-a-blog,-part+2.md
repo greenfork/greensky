@@ -93,7 +93,7 @@ blogs taken from [zola](https://github.com/getzola/zola):
 
 <div class="pure-table-wrapper pure-table-striped-wrapper">
 
-|                                 | Zola   | Cobalt | Hugo   | Pelican |
+| Static site generator           | Zola   | Cobalt | Hugo   | Pelican |
 |:--------------------------------|:------:|:------:|:------:|:-------:|
 | Language                        | Rust   | Rust   | Go     | Python  |
 | Single binary                   | yes    | yes    | yes    | no      |
