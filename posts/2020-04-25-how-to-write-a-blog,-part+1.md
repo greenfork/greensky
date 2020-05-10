@@ -3,8 +3,8 @@ good-looking. And actually I'm not even going to talk about that, this is
 a programming blog afterall (HTML and CSS is not programming). I will tell you
 how to make it fast, simple and maintainable.
 
-This part is an introductory material, feel free to skip to part 2
-(which will be a bit later) for more technical details.
+This part is an introductory material, feel free to skip to
+[part 2](2020-05-10-how-to-write-a-blog,-part+2.html) for more technical details.
 
 
 ## Existing solutions
@@ -146,4 +146,5 @@ so that `hackers` could think of it "it's so cool, it's so minimal".
 In my personal and correct opinion I think it's wrong. Would you call yourself
 a hacker using some of this bloated software? Maybe yes and maybe you are right.
 But is this the only option? No. And I will show you the path if you are
-willing to follow. Please, wait for part 2 to come.
+willing to follow. Please continue with
+[part 2](2020-05-10-how-to-write-a-blog,-part+2.html).
