@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>How to write a blog, part&nbsp;2 · Greensky</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+<!--[if lte IE 8]>
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-old-ie-min.css">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css">
+<!--<![endif]-->
+
+<link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/lightfair.min.css">
+
+<link rel="stylesheet" href="assets/greensky_style.css">
+</head>
+<body>
+<div class="container">
+      <div class="post">
+  <h1>How to write a blog, part&nbsp;2</h1>
+  <h2 class="subtitle-date">2020-05-10</h2>
+  <p>So, you are here. Hello and welcome. I will describe here how to write a blog.
+It will be a somewhat technical description so please be ready. But it will also
+be partly philosophical musings and for this you might also want to get ready.</p>
+<p>Please read <a href="2020-04-25-how-to-write-a-blog,-part+1.html">part 1</a> for a gentle
+introduction to the topic with a less technical background required.</p>
+<h2>&quot;Do one thing and do it well&quot;©</h2>
+<p>This is a famous phrase in <a href="https://en.wikipedia.org/wiki/Unix">UNIX</a> world. In UNIX-like systems
+(<a href="https://en.wikipedia.org/wiki/Linux">Linux</a>, <a href="https://en.wikipedia.org/wiki/MacOS">MacOS</a>, <a href="https://en.wikipedia.org/wiki/Berkeley_Software_Distribution">*BSD</a>) there exists a set of small standard programs
+that do one thing and that are able to communicate with each other using pipes
+<code>|</code>. A short example would be most useful:</p>
+<pre><code class="language-bash">$ ls posts/ | cut -d - -f 1-3 | sort | xargs -I {} date -d {} +%A
+</code></pre>
+<p>and it produces the following output which lists all the days of the week
+on which I wrote the blog posts in chronological order:</p>
+<pre><code>Sunday
+Saturday
+Sunday
+</code></pre>
+<details>
+  <summary>Explanation of the command</summary>
+<ol>
+<li>
+<p><code>$</code> - this is not a part of a command, don't write it, no one writes it.
+This is just a convention which means that the following command
+should be written in the terminal.</p>
+</li>
+<li>
+<p><code>ls posts/</code> - <code>ls</code> means list files, <code>posts/</code> points to the directory,
+where we want to list files. Currently typing just <code>ls posts/</code> has the
+following output:</p>
+<pre><code>2020-04-19-pixel-clouds.md
+2020-04-25-how-to-write-a-blog,-part+1.md
+2020-05-10-how-to-write-a-blog,-part+2.md
+</code></pre>
+<p>These are the posts that I have written so far.</p>
+</li>
+<li>
+<p><code>cut -d - -f 1-3</code> - this command splits the input by dashes
+<code>-</code> (using <code>-d -</code> flag) and choses only columns
+from 1 to 3 (using <code>-f 1-3</code> flag). <code>ls posts/ | cut -d - -f 1-3</code> outputs:</p>
+<pre><code>2020-04-19
+2020-04-25
+2020-05-10
+</code></pre>
+<p>Here the <code>cut</code> command by itself is not as useful as with the
+flags <code>-d</code> and <code>-f</code>. Flag <code>-d</code> allows to specify the delimiter which
+is a dash in our case and the flag <code>-f</code> allows to choose certain columns.
+One more important thing to realize is the use of <code>|</code> which takes output from
+<code>ls</code> and passes it over as input to <code>cut</code> command. This is how commands
+communicate with each other.</p>
+</li>
+<li>
+<p><code>sort</code> - this command just does what it says it does, it sorts the input.
+This ensures that all the posts are listed in chronological order.</p>
+</li>
+<li>
+<p><code>date -d 2020-04-19 +%A</code> - this command takes a date as input with the flag
+<code>-d</code> and applies a formatting to it using <code>+%A</code> syntax, in this case this
+formatting just outputs the day of the week. So the output of this command
+is just &quot;Sunday&quot;.</p>
+</li>
+<li>
+<p><code>xargs -I {} date -d {} +%A</code> - the problem with the command <code>date</code> is that
+it doesn't fully support the pipe <code>|</code> communication and here <code>xargs</code> comes
+to the rescue, it first says: <code>-I {}</code> - whatever I get from input, please
+use double braces <code>{}</code> pattern instead of an input line in the next command;
+and then comes the command <code>date -d {} +%A</code> which transforms into
+<code>date -d 2020-04-19 +%A</code> and so on for all the other input lines
+(of which there are 3 lines from the <code>cut</code> command, see point 3).</p>
+</li>
+</ol>
+</details>
+<p>This is an example which uses a total of 5 different commands which all
+communicate with each other. This is the essence of the quote &quot;Do one thing
+and do it well&quot;.</p>
+<h2>Static site generator which does one thing</h2>
+<p>You might have guessed which thing it should do well - create a blog.</p>
+<p>Here is a list of features comparing different static site generators for
+blogs taken from <a href="https://github.com/getzola/zola">zola</a>:</p>
+<div class="pure-table-wrapper pure-table-striped-wrapper">
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="center">Zola</th>
+<th align="center">Cobalt</th>
+<th align="center">Hugo</th>
+<th align="center">Pelican</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Language</td>
+<td align="center">Rust</td>
+<td align="center">Rust</td>
+<td align="center">Go</td>
+<td align="center">Python</td>
+</tr>
+<tr>
+<td align="left">Single binary</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td align="left">Syntax highlighting</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Sass compilation</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Assets co-location</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Multilingual site</td>
+<td align="center">ehh</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Image processing</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Sane &amp; powerful template engine</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">ehh</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Themes</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Shortcodes</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Internal links</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Link checker</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Table of contents</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Automatic header anchors</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Aliases</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Pagination</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Custom taxonomies</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td align="left">Search</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Data files</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td align="left">LiveReload</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Netlify support</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td align="left">ZEIT Now support</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Breadcrumbs</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="left">Custom output formats</td>
+<td align="center">no</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+</tr></tbody></table>
+</div>
+<p>Do you need all these features? Half of them? A quarter? Answers vary but
+for an average user I would say a quarter is going to be enough. I believe
+this is the idea behind the Cobalt, it has roughly a quarter.</p>
+<p>You might have a different opinion and you might need 90% of these features,
+it is fine, I don't say it is bad. But it has certain implications.</p>
+<p>What if you need an additional feature? I will just list the top 5 reasons
+why you are probably not going to get it:</p>
+<ol>
+<li>It is too specific, there's no one who would want to implement this feature.</li>
+<li>The codebase is not very well adapted to implement this feature, it is
+postponed until better times.</li>
+<li>You are not a <code>&lt;insert language&gt;</code> programmer and you don't feel like
+learning a new language just for this use case.</li>
+<li>The codebase is too large and even with your knowledge of programming
+it requires too much commitment.</li>
+<li>You know you can change the code just how you want it to be but you are
+unable to convince the repository maintainer to merge this into the main
+repository for various reasons and you don't want to maintain a separate
+fork of the project.</li>
+</ol>
+<p>Any of these might be false for you and it's fine. If this is the case, I
+don't believe my knowledge will have much of a practical use for you but you
+might still want to follow because of sheer interest. Please be my guest.</p>
+<h2>Let's create a static site generator in Nim</h2>
+<p><a href="https://nim-lang.org/">Nim</a> is a statically typed compiled systems programming language.
+It combines successful concepts from mature languages like Python,
+Ada and Modula. I will use this language because I believe it can provide
+all the necessary features with the minimal friction.</p>
+<p>If you are an absolute beginner, you might want to check out the
+beginner-friendly <a href="https://narimiran.github.io/nim-basics/">Nim tutorial</a> to get the basic programming concepts
+and make the most of the following content.</p>
+<p>If you are not a beginner, the code will be pretty easy, especially
+if you are familiar with Python.</p>
+<p>What do we need in order to create a static site generator? We need 3 things:</p>
+<ol>
+<li>Design</li>
+<li>Templates</li>
+<li>Markdown parser</li>
+</ol>
+<p>Firstly, design. It mainly boils down to learning CSS and practicing your
+skills of creating beautiful layouts. But you don't need to be exceptionally
+good at it, look at this blog, you can definitely do better even without
+tryharding.</p>
+<p>Secondly, templates. They will allow us to reduce html duplication to the
+minimum. Nim has a language feature called <a href="https://nim-lang.org/docs/filters.html">Source Code Filters</a> which
+creates compiled templates and they are perfectly fit for our case - they
+are fast and easy to use.</p>
+<p>Thirdly, we need a markdown parser. You might want to use a different format:
+Asciidoc, Org-mode, reStructuredText - but I will use markdown here. It's
+good enough. Every popular language has a library for that already and
+Nim has it as well - <a href="https://github.com/soasme/nim-markdown">nim-markdown</a>.</p>
+<p>So, all the pieces of the puzzle are in place, let's put them together.</p>
+<h3>Design</h3>
+<p>Let's throw some css for the beautiful design:</p>
+<pre><code class="language-css">body {
+  color: #624B08;
+  background-color: ghostwhite;
+  font-family: sans-serif;
+}
+a {
+  text-decoration: none;
+  color: #bb8d02;
+}
+a:hover {
+  color: #dfa800;
+}
+h1, h2, h3, h4, h5, h6, .header {
+  font-family: sans-serif;
+  color: #463605; /* a bit darker than the text in body */
+  margin-bottom: 0.8rem;
+  margin-top: 2rem;
+}
+.container {
+  margin: 0 auto;
+  max-width: 768px;
+  padding-top: 5%;
+  padding-bottom: 10%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+ul li, ol li {
+  margin-bottom: 0.9rem;
+}
+</code></pre>
+<p>This code is not really hard and I won't fully explain what it does,
+but just trust me, this is very easy, you can quickly pick up the
+idea along the way if you really want to <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps">learn CSS</a>.</p>
+<p>The general idea is that this code allows to use headers, links, lists and
+it centers the text to the center. All the basic things are here.</p>
+<h3>Templates</h3>
+<p>Then goes the the code for a general template:</p>
+<pre><code class="language-html"># This is in file `layout.html`
+
+#? strip(startswith = &quot;&lt;&quot;) | stdtmpl
+#proc genLayoutHtml(title, content: string): string =
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;$title · Greensky&lt;/title&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/purecss@1.0.1/build/pure-min.css&quot; integrity=&quot;sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47&quot; crossorigin=&quot;anonymous&quot;&gt;
+    &lt;!--[if lte IE 8]&gt;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/purecss@1.0.1/build/grids-responsive-old-ie-min.css&quot;&gt;
+    &lt;![endif]--&gt;
+    &lt;!--[if gt IE 8]&gt;&lt;!--&gt;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css&quot;&gt;
+    &lt;!--&lt;![endif]--&gt;
+
+    &lt;link rel=&quot;stylesheet&quot;
+          href=&quot;https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/lightfair.min.css&quot;&gt;
+
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;assets/greensky_style.css&quot;&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class=&quot;container&quot;&gt;
+      $content
+    &lt;/div&gt;
+
+    &lt;script src=&quot;assets/highlight/highlight.pack.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>and a template for a specific blog post:</p>
+<pre><code class="language-html"># This is in file `post.html`
+
+#? stdtmpl
+#proc genPostHtml(post: tuple[path, title, date, content: string]): string =
+&lt;div class=&quot;post&quot;&gt;
+  &lt;h1&gt;${post.title}&lt;/h1&gt;
+  &lt;h2 class=&quot;subtitle-date&quot;&gt;${post.date}&lt;/h2&gt;
+  ${post.content}
+&lt;/div&gt;
+</code></pre>
+<p>Again, html is easy, you can <a href="https://www.w3schools.com/html/">learn HTML</a> if you want. All Nim does is that
+it adds these directives to make the magic happen:</p>
+<pre><code>#? stdtmpl
+#proc genPostHtml(post: tuple[path, title, date, content: string]): string =
+</code></pre>
+<p>These 2 code snippets give us 2 functions: <code>genLayoutHtml</code> and <code>genPostHtml</code>
+and this is all we need from a template really. We do it like this:</p>
+<pre><code class="language-nim">include &quot;layout.html&quot;
+include &quot;post.html&quot;
+let post = (
+  path: &quot;/path/to/file&quot;,
+  title: &quot;Creative Title&quot;,
+  date: &quot;2020-05-10&quot;,
+  content: &quot;&lt;h2&gt;My html content&lt;/h2&gt;&lt;p&gt;Hej-hej!&lt;/p&gt;&quot;,
+)
+let postHtml = genPostHtml(post)
+let pageHtml = genLayoutHtml(post.title, postHtml)
+</code></pre>
+<p>and now we have a variable <code>pageHtml</code> which has all the html we want on
+our page.</p>
+<h3>Markdown</h3>
+<p>This is the easiest part because we already have a <a href="https://github.com/soasme/nim-markdown">library</a>
+which does all the heavy lifting for us.</p>
+<pre><code class="language-nim">import markdown
+let markdown = markdown(readFile(&quot;/path/to/file&quot;), config=initGfmConfig())
+</code></pre>
+<p>Alright, the variable <code>markdown</code> has all the html we need. Cool.</p>
+<h2>And done!</h2>
+<p>So many words and so little code. But this is basically all we need. These
+are the main building blocks of a static site generator for blog.</p>
+<p>Let's wrap up by listing the reasons why you might want to create
+and use your own static site generator:</p>
+<ol>
+<li>It is easy, you don't have to be an exceptional programmer, average will do.</li>
+<li>You know the code, you can easily modify it.</li>
+<li>The codebase is simple enough to add new features, new features can
+be tailored to your specific needs.</li>
+</ol>
+<p>Aaaaaand... it's fun! Beautiful.</p>
+<p>The main parts are here but we still need some glue to make it all work
+together. This is a good topic for a next part. See you!</p>
+
+</div>
+
+</div>
+
+<script src="assets/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

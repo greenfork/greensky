@@ -121,6 +121,10 @@ h1, h2, h3, h4, h5, h6, .header {
 ul li, ol li {
   margin-bottom: 0.9rem;
 }
+details summary {
+  display: list-item;
+  cursor: pointer;
+}
 
 .container {
   margin: 0 auto;
@@ -147,11 +151,36 @@ ul li, ol li {
   font-size: 0.9rem;
   padding-left: 0.4rem;
 }
+
 /* Inline code inside backticks in markdown */
 :not(pre) > code {
   color: #730093;
 }
 
+/* Workaround to use markdown tables with pure-css styles */
+.pure-table-wrapper table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+  border: 1px solid #cbcbcb;
+}
+.pure-table-wrapper thead {
+  background-color: #e0e0e0;
+  text-align: left;
+  vertical-align: bottom;
+}
+.pure-table-wrapper td, .pure-table-wrapper th {
+  border-left: 1px solid #cbcbcb;
+  border-width: 0 0 0 1px;
+  font-size: inherit;
+  margin: 0;
+  overflow: visible;
+  padding: .5em 1em;
+}
+.pure-table-striped-wrapper tr:nth-child(2n-1) td {
+  background-color: #f2f2f2;
+}
 
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) { /*...*/ }
