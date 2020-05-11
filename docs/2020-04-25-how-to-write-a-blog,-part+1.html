@@ -82,14 +82,7 @@ and as a result you get something like the following (this is considered small):
       &lt;/ul&gt;
     &lt;/div&gt;
     &lt;script src=&quot;assets/highlight/highlight.pack.js&quot;&gt;&lt;/script&gt;
-    &lt;!--
-    &lt;script&gt;
-      // This code shouldn't be commented but it gets eaten by a highlighter
-      // otherwise.
-      // https://github.com/highlightjs/highlight.js/issues/2504
-      hljs.initHighlightingOnLoad();
-    &lt;/script&gt;
-    --&gt;
+    &lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>

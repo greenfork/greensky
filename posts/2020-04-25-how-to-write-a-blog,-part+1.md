@@ -73,14 +73,7 @@ and as a result you get something like the following (this is considered small):
       </ul>
     </div>
     <script src="assets/highlight/highlight.pack.js"></script>
-    <!--
-    <script>
-      // This code shouldn't be commented but it gets eaten by a highlighter
-      // otherwise.
-      // https://github.com/highlightjs/highlight.js/issues/2504
-      hljs.initHighlightingOnLoad();
-    </script>
-    -->
+    <script>hljs.initHighlightingOnLoad();</script>
   </body>
 </html>
 ```
