@@ -67,7 +67,8 @@ proc main() =
     let filename = extractFilename(path)
     let dest = "docs"/filename
     let fileInfo = splitFile(path)
-    let content = genLayoutHtml(fileInfo.name.humanize(), readFile(path))
+    let markdown = markdown(readFile(path), config=initGfmConfig())
+    let content = genLayoutHtml(fileInfo.name.humanize(), markdown)
     writeFile(dest, content)
     echo "Generated ", dest.rfCyan3()
 
