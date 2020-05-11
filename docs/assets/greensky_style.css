@@ -125,6 +125,10 @@ details summary {
   display: list-item;
   cursor: pointer;
 }
+details {
+  border: 1px dashed #cbcbcb;
+  padding: 1rem;
+}
 
 .container {
   margin: 0 auto;

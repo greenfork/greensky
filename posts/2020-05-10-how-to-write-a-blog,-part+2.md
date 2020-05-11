@@ -35,7 +35,7 @@ Sunday
 
 1. `$` - this is not a part of a command, don't write it, no one writes it.
    This is just a convention which means that the following command
-   should be written in the terminal.
+   should be written in the [terminal].
 
 2. `ls posts/` - `ls` means list files, `posts/` points to the directory,
    where we want to list files. Currently typing just `ls posts/` has the
@@ -48,7 +48,7 @@ Sunday
    These are the posts that I have written so far.
 
 3. `cut -d - -f 1-3` - this command splits the input by dashes
-   `-` (using `-d -` flag) and choses only columns
+   `-` (using `-d -` flag) and chooses only columns
    from 1 to 3 (using `-f 1-3` flag). `ls posts/ | cut -d - -f 1-3` outputs:
    ```
    2020-04-19
@@ -77,12 +77,23 @@ Sunday
    and then comes the command `date -d {} +%A` which transforms into
    `date -d 2020-04-19 +%A` and so on for all the other input lines
    (of which there are 3 lines from the `cut` command, see point 3).
+   Basically `xargs` helped to use pipe `|` communication with a command
+   which does not play with it very well by default.
+
+[terminal]: https://en.wikipedia.org/wiki/Virtual_console
 
 </details>
 
-This is an example which uses a total of 5 different commands which all
-communicate with each other. This is the essence of the quote "Do one thing
-and do it well".
+This is an example which uses a total of 5 different commands which all do
+just one thing but with the help of communication we can build powerful
+constructions using these simple commands.
+
+This is the essence of the quote "Do one thing and do it well".
+And it often implies that these programs should be able to communicate
+with each other, otherwise they are useless. But I would argue that
+even if the command does just one thing, it is still useful for this 1
+specific use case. And even if it does not communicate well, it is easier
+to extend it to suit your needs.
 
 ## Static site generator which does one thing
 
@@ -122,27 +133,27 @@ blogs taken from [zola](https://github.com/getzola/zola):
 
 </div>
 
-Do you need all these features? Half of them? A quarter? Answers vary but
+There are a lot of features.
+Do you need all of them? A half of them? A quarter? Answers vary but
 for an average user I would say a quarter is going to be enough. I believe
 this is the idea behind the Cobalt, it has roughly a quarter.
 
-You might have a different opinion and you might need 90% of these features,
-it is fine, I don't say it is bad. But it has certain implications.
+This might not exactly reflect your needs, you could need all of them.
+But the abundance of features also has its implications.
 
-What if you need an additional feature? I will just list the top 5 reasons
-why you are probably not going to get it:
+What if you need an additional feature? Here I will try to list 5 reasons
+why you might not get this feature:
 
 1. It is too specific, there's no one who would want to implement this feature.
 2. The codebase is not very well adapted to implement this feature, it is
    postponed until better times.
 3. You are not a `<insert language>` programmer and you don't feel like
-   learning a new language just for this use case.
+   learning a new language to implement it yourself.
 4. The codebase is too large and even with your knowledge of programming
    it requires too much commitment.
-5. You know you can change the code just how you want it to be but you are
-   unable to convince the repository maintainer to merge this into the main
-   repository for various reasons and you don't want to maintain a separate
-   fork of the project.
+5. You know you can make the code to work exactly how you want but you are
+   unable to convince the repository maintainer that this feature should be
+   added. And it doesn't sound appealing to maintain your own fork.
 
 Any of these might be false for you and it's fine. If this is the case, I
 don't believe my knowledge will have much of a practical use for you but you
@@ -153,7 +164,7 @@ might still want to follow because of sheer interest. Please be my guest.
 [Nim] is a statically typed compiled systems programming language.
 It combines successful concepts from mature languages like Python,
 Ada and Modula. I will use this language because I believe it can provide
-all the necessary features with the minimal friction.
+all the necessary tools with the minimal friction.
 
 If you are an absolute beginner, you might want to check out the
 beginner-friendly [Nim tutorial] to get the basic programming concepts
@@ -171,7 +182,8 @@ What do we need in order to create a static site generator? We need 3 things:
 2. Templates
 3. Markdown parser
 
-Firstly, design. It mainly boils down to learning CSS and practicing your
+Firstly, design. It mainly boils down to [learning CSS][learn CSS]
+and practicing your
 skills of creating beautiful layouts. But you don't need to be exceptionally
 good at it, look at this blog, you can definitely do better even without
 tryharding.
@@ -185,8 +197,8 @@ are fast and easy to use.
 
 Thirdly, we need a markdown parser. You might want to use a different format:
 Asciidoc, Org-mode, reStructuredText - but I will use markdown here. It's
-good enough. Every popular language has a library for that already and
-Nim has it as well - [nim-markdown].
+good enough. Every popular language has a library for that and
+Nim is not an exception, I will use [nim-markdown].
 
 [nim-markdown]: https://github.com/soasme/nim-markdown
 
@@ -230,12 +242,12 @@ ul li, ol li {
 
 This code is not really hard and I won't fully explain what it does,
 but just trust me, this is very easy, you can quickly pick up the
-idea along the way if you really want to [learn CSS].
+idea along the way if you want to [learn CSS].
 
 [learn CSS]: https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps
 
-The general idea is that this code allows to use headers, links, lists and
-it centers the text to the center. All the basic things are here.
+The general idea behind this code is that it allows us to use headers, links,
+lists and it keeps the text in the center. All the basic things.
 
 ### Templates
 
@@ -335,10 +347,9 @@ Now, the variable `markdown` has all the html we need. Cool.
 
 [raw markdown]: https://raw.githubusercontent.com/greenfork/greensky/master/posts/2020-05-10-how-to-write-a-blog%2C-part%2B2.md
 
-## And done!
+## Done!
 
-So many words and so little code. But this is basically all we need. These
-are the main building blocks of a static site generator for blog.
+So many words and so little code. But this is all we need.
 
 Let's wrap up by listing the reasons why you might want to create
 and use your own static site generator:
@@ -351,4 +362,5 @@ and use your own static site generator:
 Aaaaaand... it's fun! Beautiful.
 
 The main parts are here but we still need some glue to make it all work
-together. This is a good topic for a next part. See you!
+together. And we might want to add a couple of additional features as well.
+This is a good topic for the next part. See you!

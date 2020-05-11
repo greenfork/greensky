@@ -47,7 +47,7 @@ Sunday
 <li>
 <p><code>$</code> - this is not a part of a command, don't write it, no one writes it.
 This is just a convention which means that the following command
-should be written in the terminal.</p>
+should be written in the <a href="https://en.wikipedia.org/wiki/Virtual_console">terminal</a>.</p>
 </li>
 <li>
 <p><code>ls posts/</code> - <code>ls</code> means list files, <code>posts/</code> points to the directory,
@@ -61,7 +61,7 @@ following output:</p>
 </li>
 <li>
 <p><code>cut -d - -f 1-3</code> - this command splits the input by dashes
-<code>-</code> (using <code>-d -</code> flag) and choses only columns
+<code>-</code> (using <code>-d -</code> flag) and chooses only columns
 from 1 to 3 (using <code>-f 1-3</code> flag). <code>ls posts/ | cut -d - -f 1-3</code> outputs:</p>
 <pre><code>2020-04-19
 2020-04-25
@@ -91,13 +91,21 @@ to the rescue, it first says: <code>-I {}</code> - whatever I get from input, pl
 use double braces <code>{}</code> pattern instead of an input line in the next command;
 and then comes the command <code>date -d {} +%A</code> which transforms into
 <code>date -d 2020-04-19 +%A</code> and so on for all the other input lines
-(of which there are 3 lines from the <code>cut</code> command, see point 3).</p>
+(of which there are 3 lines from the <code>cut</code> command, see point 3).
+Basically <code>xargs</code> helped to use pipe <code>|</code> communication with a command
+which does not play with it very well by default.</p>
 </li>
 </ol>
 </details>
-<p>This is an example which uses a total of 5 different commands which all
-communicate with each other. This is the essence of the quote &quot;Do one thing
-and do it well&quot;.</p>
+<p>This is an example which uses a total of 5 different commands which all do
+just one thing but with the help of communication we can build powerful
+constructions using these simple commands.</p>
+<p>This is the essence of the quote &quot;Do one thing and do it well&quot;.
+And it often implies that these programs should be able to communicate
+with each other, otherwise they are useless. But I would argue that
+even if the command does just one thing, it is still useful for this 1
+specific use case. And even if it does not communicate well, it is easier
+to extend it to suit your needs.</p>
 <h2>Static site generator which does one thing</h2>
 <p>You might have guessed which thing it should do well - create a blog.</p>
 <p>Here is a list of features comparing different static site generators for
@@ -283,25 +291,25 @@ blogs taken from <a href="https://github.com/getzola/zola">zola</a>:</p>
 <td align="center">no</td>
 </tr></tbody></table>
 </div>
-<p>Do you need all these features? Half of them? A quarter? Answers vary but
+<p>There are a lot of features.
+Do you need all of them? A half of them? A quarter? Answers vary but
 for an average user I would say a quarter is going to be enough. I believe
 this is the idea behind the Cobalt, it has roughly a quarter.</p>
-<p>You might have a different opinion and you might need 90% of these features,
-it is fine, I don't say it is bad. But it has certain implications.</p>
-<p>What if you need an additional feature? I will just list the top 5 reasons
-why you are probably not going to get it:</p>
+<p>This might not exactly reflect your needs, you could need all of them.
+But the abundance of features also has its implications.</p>
+<p>What if you need an additional feature? Here I will try to list 5 reasons
+why you might not get this feature:</p>
 <ol>
 <li>It is too specific, there's no one who would want to implement this feature.</li>
 <li>The codebase is not very well adapted to implement this feature, it is
 postponed until better times.</li>
 <li>You are not a <code>&lt;insert language&gt;</code> programmer and you don't feel like
-learning a new language just for this use case.</li>
+learning a new language to implement it yourself.</li>
 <li>The codebase is too large and even with your knowledge of programming
 it requires too much commitment.</li>
-<li>You know you can change the code just how you want it to be but you are
-unable to convince the repository maintainer to merge this into the main
-repository for various reasons and you don't want to maintain a separate
-fork of the project.</li>
+<li>You know you can make the code to work exactly how you want but you are
+unable to convince the repository maintainer that this feature should be
+added. And it doesn't sound appealing to maintain your own fork.</li>
 </ol>
 <p>Any of these might be false for you and it's fine. If this is the case, I
 don't believe my knowledge will have much of a practical use for you but you
@@ -310,7 +318,7 @@ might still want to follow because of sheer interest. Please be my guest.</p>
 <p><a href="https://nim-lang.org/">Nim</a> is a statically typed compiled systems programming language.
 It combines successful concepts from mature languages like Python,
 Ada and Modula. I will use this language because I believe it can provide
-all the necessary features with the minimal friction.</p>
+all the necessary tools with the minimal friction.</p>
 <p>If you are an absolute beginner, you might want to check out the
 beginner-friendly <a href="https://narimiran.github.io/nim-basics/">Nim tutorial</a> to get the basic programming concepts
 and make the most of the following content.</p>
@@ -322,7 +330,8 @@ if you are familiar with Python.</p>
 <li>Templates</li>
 <li>Markdown parser</li>
 </ol>
-<p>Firstly, design. It mainly boils down to learning CSS and practicing your
+<p>Firstly, design. It mainly boils down to <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps">learning CSS</a>
+and practicing your
 skills of creating beautiful layouts. But you don't need to be exceptionally
 good at it, look at this blog, you can definitely do better even without
 tryharding.</p>
@@ -332,8 +341,8 @@ creates compiled templates and they are perfectly fit for our case - they
 are fast and easy to use.</p>
 <p>Thirdly, we need a markdown parser. You might want to use a different format:
 Asciidoc, Org-mode, reStructuredText - but I will use markdown here. It's
-good enough. Every popular language has a library for that already and
-Nim has it as well - <a href="https://github.com/soasme/nim-markdown">nim-markdown</a>.</p>
+good enough. Every popular language has a library for that and
+Nim is not an exception, I will use <a href="https://github.com/soasme/nim-markdown">nim-markdown</a>.</p>
 <p>So, all the pieces of the puzzle are in place, let's put them together.</p>
 <h3>Design</h3>
 <p>Let's throw some css for the beautiful design:</p>
@@ -369,9 +378,9 @@ ul li, ol li {
 </code></pre>
 <p>This code is not really hard and I won't fully explain what it does,
 but just trust me, this is very easy, you can quickly pick up the
-idea along the way if you really want to <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps">learn CSS</a>.</p>
-<p>The general idea is that this code allows to use headers, links, lists and
-it centers the text to the center. All the basic things are here.</p>
+idea along the way if you want to <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps">learn CSS</a>.</p>
+<p>The general idea behind this code is that it allows us to use headers, links,
+lists and it keeps the text in the center. All the basic things.</p>
 <h3>Templates</h3>
 <p>Then goes the the code for a general template:</p>
 <pre><code class="language-html"># This is in file `layout.html`
@@ -448,9 +457,8 @@ let markdown = markdown(readFile(&quot;/path/to/file&quot;), config=initGfmConfi
 <p>Here <code>&quot;/path/to/file&quot;</code> should be a path to a file with your markdown text.
 You can have a look at this exact post in <a href="https://raw.githubusercontent.com/greenfork/greensky/master/posts/2020-05-10-how-to-write-a-blog%2C-part%2B2.md">raw markdown</a>.
 Now, the variable <code>markdown</code> has all the html we need. Cool.</p>
-<h2>And done!</h2>
-<p>So many words and so little code. But this is basically all we need. These
-are the main building blocks of a static site generator for blog.</p>
+<h2>Done!</h2>
+<p>So many words and so little code. But this is all we need.</p>
 <p>Let's wrap up by listing the reasons why you might want to create
 and use your own static site generator:</p>
 <ol>
@@ -461,7 +469,8 @@ be tailored to your specific needs.</li>
 </ol>
 <p>Aaaaaand... it's fun! Beautiful.</p>
 <p>The main parts are here but we still need some glue to make it all work
-together. This is a good topic for a next part. See you!</p>
+together. And we might want to add a couple of additional features as well.
+This is a good topic for the next part. See you!</p>
 
 </div>
 
