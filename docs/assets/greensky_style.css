@@ -100,6 +100,17 @@ body {
   color: #624B08;
   background-color: ghostwhite;
   font-family: Carlito, sans-serif;
+  min-height: 100vh;
+}
+.wrapper {
+  padding-bottom: 250px;
+}
+footer {
+  max-width: 512px;
+  height: 150px;
+  margin: -150px auto 20px auto;
+  padding: 2rem;
+  border: 1px dashed #cbcbcb;
 }
 code {
   font-family: JetBrainsMono, monospace;
@@ -172,7 +183,6 @@ details {
 .container {
   margin: 0 auto;
   max-width: 768px;
-  padding-bottom: 4rem;
   padding-left: 5%;
   padding-right: 5%;
 }

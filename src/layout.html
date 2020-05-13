@@ -21,22 +21,32 @@
     <link rel="stylesheet" href="assets/greensky_style.css">
   </head>
   <body>
-    <div class="logo">
-      <a href="index.html">
-        <img class="pure-img" src="assets/images/greensky_logo.png">
-      </a>
-      <h2 class="logo-subtitle">A blog of one programmer</h2>
+    <div class="wrapper">
+      <div class="logo">
+        <a href="index.html">
+          <img class="pure-img" src="assets/images/greensky_logo.png">
+        </a>
+        <h2 class="logo-subtitle">A blog of one programmer</h2>
+      </div>
+
+      <nav class="top-navigation">
+        <ul>
+          <li><a class="nav-card" href="techstack.html">Techstack</a></li>
+          <li><a class="nav-card" href="about.html">About</a></li>
+      </nav>
+
+      <div class="container">
+        $content
+      </div>
     </div>
 
-    <nav class="top-navigation">
-      <ul>
-        <li><a class="nav-card" href="techstack.html">Techstack</a></li>
-        <li><a class="nav-card" href="about.html">About</a></li>
-    </nav>
-
-    <div class="container">
-      $content
-    </div>
+    <footer>
+      <p>Contact me at</p>
+      <p>
+        Email: dm.matveyev@pm.me<br>
+        Telegram: @dmitrymatveyev
+      </p>
+    </footer>
 
     <script src="assets/highlight/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
