@@ -1,7 +1,18 @@
 #? stdtmpl
 #proc genIndexHtml(posts: openArray[tuple[path, title, date, content: string]]): string =
+<p>
+  Hello. You most probably want to check out the articles below. They are
+  generally centered around programming, design, philosophy and everything
+  around computers. Enjoy!
+</p>
+
+<h2>Index</h2>
 <ul>
   #for (path, title, date, content) in posts:
     <li><a href="${path}">$title - $date</a></li>
   #end for
 </ul>
+
+<p>
+  This space is reserved for future improvements. Please don't look at it.
+</p>

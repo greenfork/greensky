@@ -103,6 +103,7 @@ proc main() =
     "docs"/"index.html",
     genLayoutHtml("Home", genIndexHtml(posts))
   )
+  echo "Generated ", "docs/index.html".rfCyan3()
 
   echo "Finished in ", $(cpuTime() - t0), " seconds"
 
