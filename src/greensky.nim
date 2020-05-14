@@ -1,6 +1,6 @@
 import os
 import strutils except replace
-from times import cpuTime
+from times import cpuTime, parse, format
 from algorithm import sort
 
 import regex
@@ -23,6 +23,15 @@ func humanize(str: string): string =
     .strip(chars = Whitespace + { '_', '-' })
     .multiReplace(("_", " "), ("-", " "), ("+", "&nbsp;"))
     .capitalizeAscii()
+
+func addOrdinalSuffix(n: int): string =
+  let
+    lastDigit = n mod 10
+    lastTwoDigits = n mod 100
+  if lastDigit == 1 and lastTwoDigits != 11: $n & "st"
+  elif lastDigit == 2 and lastTwoDigits != 12: $n & "nd"
+  elif lastDigit == 3 and lastTwoDigits != 13: $n & "rd"
+  else: $n & "th"
 
 # Benchmarking #
 
@@ -83,12 +92,17 @@ proc main() =
     var
       match: RegexMatch
     assert(fileInfo.name.find(datePattern, match), "Date must exist in file name")
+    let parsedDate = match
+      .groupFirstCapture("date", fileInfo.name)
+      .parse("yyyy-MM-dd")
+    let day = addOrdinalSuffix(parseInt(parsedDate.format("dd")))
+    let formattedDate = day & parsedDate.format("' of 'MMMM', 'yyyy")
     # following operation takes 15-100 ms (!)
     let markdown = markdown(readFile(path), config=initGfmConfig())
     let post = (
       path: name,
       title: fileInfo.name.humanize(),
-      date: match.groupFirstCapture("date", fileInfo.name),
+      date: formattedDate,
       content: markdown,
     )
     let postHtml = genPostHtml(post)
@@ -97,7 +111,7 @@ proc main() =
     echo "Generated ", dest.rfTurquoise2()
 
   posts.sort do (x, y: Post) -> int:
-    cmp(y.date, x.date) # Descending order, lexicographic sorting.
+    cmp(y.path, x.path) # Descending order, lexicographic sorting.
 
   writeFile(
     "docs"/"index.html",
