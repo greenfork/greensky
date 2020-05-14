@@ -96,6 +96,9 @@
 html {
   font-size: 110%;
 }
+html, button, input, select, textarea, .pure-g [class *= "pure-u"] {
+  font-family: Carlito, sans-serif;
+}
 body {
   color: #624B08;
   background-color: ghostwhite;
@@ -107,10 +110,11 @@ body {
 }
 footer {
   max-width: 512px;
-  height: 150px;
+  min-height: 150px;
   margin: -150px auto 20px auto;
-  padding: 2rem;
+  padding: 1.5rem;
   border: 1px dashed #cbcbcb;
+  font-size: .9rem;
 }
 code {
   font-family: JetBrainsMono, monospace;
