@@ -1,3 +1,7 @@
+---
+tags: pixelart, design
+---
+
 I am no artist. But alas, here I am, drawing pixel art. Who would have thought?
 Not me.
 

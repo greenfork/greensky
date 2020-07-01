@@ -1,5 +1,6 @@
 #? stdtmpl
-#proc genPostHtml(post: tuple[path, title, date, content: string]): string =
+#import types
+#proc genPostHtml(post: Post): string =
 <div class="post">
   <h1>${post.title}</h1>
   <h2 class="subtitle-date">${post.date}</h2>

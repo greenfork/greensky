@@ -1,3 +1,7 @@
+---
+tags: Nim, programming
+---
+
 So, you are here. Hello and welcome. I will describe here how to write a blog.
 It will be a somewhat technical description so please be ready. But it will also
 be partly philosophical musings and for this you might also want to get ready.

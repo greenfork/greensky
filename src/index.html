@@ -1,5 +1,6 @@
 #? stdtmpl
-#proc genIndexHtml(posts: openArray[tuple[path, title, date, content: string]]): string =
+#import types, strutils
+#proc genIndexHtml(posts: openArray[Post]): string =
 <p>
   Hello. You most probably want to check out the articles below. They are
   generally about programming, design, philosophy and everything
@@ -8,8 +9,13 @@
 
 <h2>Index</h2>
 <ul>
-  #for (path, title, date, content) in posts:
-    <li><a href="${path}">$title - $date</a></li>
+  #for p in posts:
+    <li>
+      <a href="${p.path}">$p.title - $p.date</a>
+      #for t in p.metadata.tags:
+        <span class="post-tag tag-${t.toLowerAscii}">$t</span>
+      #end for
+    </li>
   #end for
 </ul>
 

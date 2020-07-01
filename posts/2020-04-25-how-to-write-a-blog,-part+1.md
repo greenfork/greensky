@@ -1,3 +1,6 @@
+---
+tags: programming
+---
 And by writing a blog I don't mean writing the text. I mean, how to make it
 good-looking. And actually I'm not even going to talk about that, this is
 a programming blog afterall (HTML and CSS is not programming). I will tell you

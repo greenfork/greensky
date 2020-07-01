@@ -253,3 +253,21 @@ details {
     font-size: 130%;
   }
 }
+
+.post-tag {
+  font-size: .8em;
+  border-radius: 10px;
+  padding: 2px 5px;
+}
+.tag-programming, .tag-design {
+  background-color: #fd83ea;
+  color: #373100;
+}
+.tag-nim {
+  background-color: #dbc652;
+  color: #590606;
+}
+.tag-pixelart {
+  background-color: #4ae35a;
+  color: #462a05;
+}

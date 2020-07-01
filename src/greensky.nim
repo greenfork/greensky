@@ -1,7 +1,7 @@
 import os
 import strutils except replace
 from times import cpuTime, parse, format
-from algorithm import sort
+from algorithm import sort, sorted
 
 import regex
 from rainbow import rfTurquoise2, rfCyan3
@@ -11,9 +11,7 @@ include "layout.html"
 include "index.html"
 include "post.html"
 
-type
-  Post = tuple[path, title, date, content: string]
-    ## representation of markdown file
+import types
 
 const datePattern = re"(?P<date>\d\d\d\d-\d\d-\d\d)"
 
@@ -32,6 +30,24 @@ func addOrdinalSuffix(n: int): string =
   elif lastDigit == 2 and lastTwoDigits != 12: $n & "nd"
   elif lastDigit == 3 and lastTwoDigits != 13: $n & "rd"
   else: $n & "th"
+
+func parseMetadata(s: string): Metadata =
+  var
+    index: int
+    colonPos = s[0..<s.len].find(':', index)
+  while (colonPos) != -1:
+    let key = s[index..<colonPos].strip
+    let valueEnd = s[0..<s.len].find('\n', colonPos)
+    if valueEnd == -1:
+      raise newException(ParseMetadataError, "Ending newline not found for "&key)
+    let value = s[colonPos + 1 ..< valueEnd].strip
+    case key
+    of "tags":
+      result.tags = value.split(", ").sorted
+    else:
+      raise newException(ParseMetadataError, "Unknown metadata key: "&key)
+    index = valueEnd
+    colonPos = s[0..<s.len].find(':', index)
 
 # Benchmarking #
 
@@ -75,11 +91,11 @@ proc main() =
     if kind != pcFile: continue
     let filename = extractFilename(path)
     let dest = "docs"/filename
+    echo "Generating ", dest.rfCyan3()
     let fileInfo = splitFile(path)
     let markdown = markdown(readFile(path), config=initGfmConfig())
     let content = genLayoutHtml(fileInfo.name.humanize(), markdown)
     writeFile(dest, content)
-    echo "Generated ", dest.rfCyan3()
 
   var posts: seq[Post]
 
@@ -89,6 +105,7 @@ proc main() =
       fileInfo = splitFile(path)
       name = fileInfo.name & ".html"
       dest = "docs"/name
+    echo "Generating ", dest.rfTurquoise2()
     var
       match: RegexMatch
     assert(fileInfo.name.find(datePattern, match), "Date must exist in file name")
@@ -97,27 +114,40 @@ proc main() =
       .parse("yyyy-MM-dd")
     let day = addOrdinalSuffix(parseInt(parsedDate.format("dd")))
     let formattedDate = day & parsedDate.format("' of 'MMMM', 'yyyy")
+    let fileContent = readFile(path)
+    var
+      metadata: Metadata
+      metadataEnd: int
+    if fileContent.len > 3 and fileContent[0..2] == "---":
+      metadataEnd = fileContent.find("---", 3)
+      if metadataEnd == -1:
+        raise newException(ParseMetadataError, "Closing --- not found for"&dest)
+      metadata = parseMetadata(fileContent[3..<metadataEnd])
+    if metadataEnd != 0: metadataEnd += 3 # move after ---
     # following operation takes 15-100 ms (!)
-    let markdown = markdown(readFile(path), config=initGfmConfig())
-    let post = (
+    let markdown = markdown(
+      fileContent[metadataEnd ..< fileContent.len],
+      config=initGfmConfig()
+    )
+    let post = Post(
       path: name,
       title: fileInfo.name.humanize(),
       date: formattedDate,
       content: markdown,
+      metadata: metadata,
     )
     let postHtml = genPostHtml(post)
     writeFile(dest, genLayoutHtml(post.title, postHtml))
     posts.add post
-    echo "Generated ", dest.rfTurquoise2()
 
   posts.sort do (x, y: Post) -> int:
     cmp(y.path, x.path) # Descending order, lexicographic sorting.
 
+  echo "Generating ", "docs/index.html".rfCyan3()
   writeFile(
     "docs"/"index.html",
     genLayoutHtml("Home", genIndexHtml(posts))
   )
-  echo "Generated ", "docs/index.html".rfCyan3()
 
   echo "Finished in ", $(cpuTime() - t0), " seconds"
 
