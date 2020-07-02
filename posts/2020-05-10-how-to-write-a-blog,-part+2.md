@@ -367,4 +367,5 @@ Aaaaaand... it's fun! Beautiful.
 
 The main parts are here but we still need some glue to make it all work
 together. And we might want to add a couple of additional features as well.
-This is a good topic for the next part. See you!
+This is a good topic for the
+[next part 3](2020-07-01-how-to-write-a-blog,-part+3.html). See you!

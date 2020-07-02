@@ -34,10 +34,10 @@ func addOrdinalSuffix(n: int): string =
 func parseMetadata(s: string): Metadata =
   var
     index: int
-    colonPos = s[0..<s.len].find(':', index)
+    colonPos = s.find(':', index)
   while (colonPos) != -1:
     let key = s[index..<colonPos].strip
-    let valueEnd = s[0..<s.len].find('\n', colonPos)
+    let valueEnd = s.find('\n', colonPos)
     if valueEnd == -1:
       raise newException(ParseMetadataError, "Ending newline not found for "&key)
     let value = s[colonPos + 1 ..< valueEnd].strip
@@ -47,12 +47,12 @@ func parseMetadata(s: string): Metadata =
     else:
       raise newException(ParseMetadataError, "Unknown metadata key: "&key)
     index = valueEnd
-    colonPos = s[0..<s.len].find(':', index)
+    colonPos = s.find(':', index)
 
 # Benchmarking #
 
-# References:
-# plain reading and writing to a file - 300 us
+# Reference:
+# plain reading and writing to a single file - 300 us
 
 # Testing with 1 file
 # no markdown processing - 850 us
