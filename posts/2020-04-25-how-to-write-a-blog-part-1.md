@@ -1,4 +1,5 @@
 ---
+title: How to write a blog, part 1
 tags: programming
 ---
 And by writing a blog I don't mean writing the text. I mean, how to make it

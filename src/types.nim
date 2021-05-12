@@ -1,6 +1,7 @@
 type
   Metadata* = object of RootObj
     tags*: seq[string]
+    title*: string
     updatedAt*: string
 
   Post* = object of RootObj

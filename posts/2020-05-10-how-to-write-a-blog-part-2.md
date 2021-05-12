@@ -1,4 +1,5 @@
 ---
+title: How to write a blog, part 2
 tags: Nim, programming
 ---
 

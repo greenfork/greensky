@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>How to write a blog, part 3 · Greensky</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+<!--[if lte IE 8]>
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-old-ie-min.css">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css">
+<!--<![endif]-->
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css" />
+
+<link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/lightfair.min.css">
+
+<link rel="stylesheet" href="assets/greensky_style.css">
+</head>
+<body>
+<div class="wrapper">
+<div class="logo">
+<a href="index.html">
+<img class="pure-img" src="assets/images/greensky_logo.png">
+</a>
+<h2 class="logo-subtitle">A blog of one programmer</h2>
+</div>
+
+<nav class="top-navigation">
+<ul>
+<li><a class="nav-card" href="techstack.html">Techstack</a></li>
+<li><a class="nav-card" href="about.html">About</a></li>
+</ul>
+</nav>
+
+<div class="container">
+        <div class="post">
+  <h1>How to write a blog, part 3</h1>
+  <h2 class="subtitle-date">1st of July, 2020</h2>
+  <p>Let's glue what we had in <a href="2020-05-10-how-to-write-a-blog,-part+2.html">part 2</a>!
+&quot;Glueing&quot; is generally &quot;connecting&quot; the core parts so they all work together.</p>
+<p>So far we need to assemble together:</p>
+<ul>
+<li>HTML templates</li>
+<li>CSS styles</li>
+<li>Markdown files</li>
+</ul>
+<p>It goes like this:</p>
+<ul>
+<li>Markdown <code>-&gt;</code> HTML via external library</li>
+<li>CSS styles go in HTML templates via <code>link</code> tag</li>
+<li>HTML template + HTML <code>-&gt;</code> Complete html page via the magic of programming</li>
+</ul>
+<p>So what do we need to glue? Just one thing, really:</p>
+<ol>
+<li>List all existing posts in a blog a.k.a. <em>Table of Content</em> or <em>Index</em></li>
+</ol>
+<p>As far as we are not too ambitious, we can get away with pretty basic
+modifications and complexity.</p>
+<h2>List all posts</h2>
+<p>So let's just list all of them. Below is a complete and minimal example
+of all the necessary files.</p>
+<p><code>life-of-a-boomer.md</code>:</p>
+<pre><code class="language-md">## Day 1
+*sip* Aaaghhh
+</code></pre>
+<hr />
+<p><code>style.css</code>:</p>
+<pre><code class="language-css">body {
+  color: #624B08;
+  background-color: ghostwhite;
+  font-family: sans-serif;
+}
+a {
+  text-decoration: none;
+  color: #bb8d02;
+}
+a:hover {
+  color: #dfa800;
+}
+h1, h2, h3, h4, h5, h6, .header {
+  font-family: sans-serif;
+  color: #463605; /* a bit darker than the text in body */
+  margin-bottom: 0.8rem;
+  margin-top: 2rem;
+}
+.container {
+  margin: 0 auto;
+  max-width: 768px;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+ul li, ol li {
+  margin-bottom: 0.9rem;
+}
+</code></pre>
+<hr />
+<p><code>layout.html</code>:</p>
+<pre><code class="language-html">#? strip(startswith = &quot;&lt;&quot;) | stdtmpl
+#proc genLayoutHtml(content: string): string =
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/purecss@1.0.1/build/pure-min.css&quot; integrity=&quot;sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47&quot; crossorigin=&quot;anonymous&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;assets/style.css&quot;&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class=&quot;container&quot;&gt;
+      $content
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<hr />
+<p><code>types.nim</code>:</p>
+<pre><code class="language-nim">type
+  Post* = object of RootObj
+    path*, title*, content*: string
+</code></pre>
+<hr />
+<p><code>index.html</code>:</p>
+<pre><code class="language-html">#? stdtmpl
+#import types
+#proc genIndexHtml(posts: openArray[Post]): string =
+&lt;h2&gt;Index&lt;/h2&gt;
+&lt;ul&gt;
+  #for p in posts:
+    &lt;li&gt;
+      &lt;a href=&quot;${p.path}&quot;&gt;$p.title&lt;/a&gt;
+    &lt;/li&gt;
+  #end for
+&lt;/ul&gt;
+</code></pre>
+<hr />
+<p><code>post.html</code>:</p>
+<pre><code class="language-html">#? stdtmpl
+#import types
+#proc genPostHtml(post: Post): string =
+&lt;div class=&quot;post&quot;&gt;
+  &lt;h1&gt;${post.title}&lt;/h1&gt;
+  ${post.content}
+&lt;/div&gt;
+</code></pre>
+<hr />
+<p><code>main.nim</code>:</p>
+<pre><code class="language-nim">import os
+import strutils
+import markdown # this is an external library which should be installed
+
+include &quot;layout.html&quot;
+include &quot;index.html&quot;
+include &quot;post.html&quot;
+
+import types
+
+proc main() =
+  var posts: seq[Post]
+
+  for kind, path in walkDir(&quot;posts&quot;, checkDir = true):
+    if kind != pcFile: continue
+    let
+      fileInfo = splitFile(path)
+      name = fileInfo.name &amp; &quot;.html&quot;
+      dest = &quot;docs&quot;/name
+    let markdown = markdown(
+      readFile(path),
+      config=initGfmConfig()
+    )
+    let post = Post(
+      path: name,
+      title: fileInfo.name.replace('-', ' ').capitalizeAscii,
+      content: markdown,
+    )
+    writeFile(
+      dest,
+      genLayoutHtml(genPostHtml(post))
+    )
+    posts.add post
+
+  writeFile(
+    &quot;docs&quot;/&quot;index.html&quot;,
+    genLayoutHtml(genIndexHtml(posts))
+  )
+
+main()
+</code></pre>
+<hr />
+<p>And with the following file structure:</p>
+<pre><code>- src/
+  - main.nim
+  - types.nim
+  - layout.html
+  - index.html
+  - post.html
+- posts/
+  - life-of-a-boomer.md
+- assets/
+  - style.css
+- docs/
+</code></pre>
+<p>all the resulting HTML files will be located in the <code>docs/</code> directory. Don't
+worry if you've just copied the code and it doesn't work, just go through
+the error messages, fix them and you'll be fine.</p>
+<h2>But this all is just boring</h2>
+<p>Yes, it is. It also works.</p>
+<p>But we can do something more interesting as well. Say, we want a juicy feature
+like attaching metadata to each markdown post to use it later. A popular idiom
+is to make it at the very start separated from the main text with <code>---</code> like so:</p>
+<p><code>mypost.md</code>:</p>
+<pre><code class="language-md">---
+tags: programming, Nim
+updatedAt: 2020-02-02
+---
+
+## Oh snap
+Here we go again
+</code></pre>
+<p>How to do it:</p>
+<ol>
+<li>Check if the file starts with <code>---</code></li>
+<li>Find closing <code>---</code></li>
+<li>Parse everything in between</li>
+</ol>
+<p>Here is an example of &quot;not stripped down for readability&quot; code with
+error handling, low-levelish parsing and types:</p>
+<pre><code class="language-nim">type
+  Metadata* = object of RootObj
+    tags*: seq[string]
+    updatedAt*: string
+
+  Post* = object of RootObj
+    path*, title*, content*: string
+    metadata*: Metadata
+
+  ParseMetadataError* = object of ValueError
+
+func parseMetadata(s: string): Metadata =
+  var
+    index: int
+    colonPos = s.find(':', index)
+  while (colonPos) != -1:
+    let key = s[index..&lt;colonPos].strip
+    let valueEnd = s.find('\n', colonPos)
+    if valueEnd == -1:
+      raise newException(ParseMetadataError,
+                         &quot;Ending newline not found for &quot;&amp;key)
+    let value = s[colonPos + 1 ..&lt; valueEnd].strip
+    case key
+    of &quot;tags&quot;:
+      result.tags = value.split(&quot;, &quot;).sorted
+    of &quot;updatedAt&quot;:
+      result.updatedAt = value
+    else:
+      raise newException(ParseMetadataError,
+                         &quot;Unknown metadata key: &quot;&amp;key)
+    index = valueEnd
+    colonPos = s.find(':', index)
+
+# some code before
+let fileContent = readFile(path)
+var
+  metadata: Metadata
+  metadataEnd: int
+if fileContent.len &gt; 3 and fileContent[0..2] == &quot;---&quot;:
+  metadataEnd = fileContent.find(&quot;---&quot;, 3)
+  if metadataEnd == -1:
+    raise newException(ParseMetadataError,
+                       &quot;Closing --- not found for &quot;&amp;dest)
+  metadata = parseMetadata(fileContent[3..&lt;metadataEnd])
+if metadataEnd != 0: metadataEnd += 3 # move after ---
+let markdown = markdown(
+  fileContent[metadataEnd ..&lt; fileContent.len],
+  config=initGfmConfig()
+)
+</code></pre>
+<h2>Conclusion</h2>
+<p>This series of blog posts aims to prove that it is possible to create a static
+site generator with relatively low effort. Hopefully it does so. And now the
+closing thought.</p>
+<p>People say that average programmers write blog posts with bad code examples and
+practices whereas really good programmers don't do it because they think
+that this is easy and essential. I think this post's code is easy and essential.
+Am I a good programmer then? I don't know, maybe I'm just an average programmer
+doing an easy thing. But it is the best thing I can do right now
+(almost best (tired (who's not? ()
+`(hidden ,(car '(&quot;lisp :(&quot;, &quot;treasure&quot;))))))) last one is unbalanced).</p>
+<p>Thanks for reading, see you!</p>
+
+</div>
+
+</div>
+</div>
+
+<footer class="pure-g">
+<div class="pure-u-1-1 pure-u-sm-1-2">
+<p>Contact me at</p>
+<p>
+          Email: dm.matveyev@pm.me<br>
+          Telegram: @dmitrymatveyev
+</p>
+</div>
+<div class="pure-u-1-1 pure-u-sm-1-2">
+<p>Find me at</p>
+<p>
+<a href="https://github.com/greenfork" target="_blank">
+<img src="assets/images/GitHub-Mark-32px.png">
+</a>
+</p>
+</div>
+</footer>
+
+<script src="assets/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

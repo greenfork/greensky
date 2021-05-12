@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Functional programming in Ruby · Greensky</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+<!--[if lte IE 8]>
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-old-ie-min.css">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css">
+<!--<![endif]-->
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css" />
+
+<link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/lightfair.min.css">
+
+<link rel="stylesheet" href="assets/greensky_style.css">
+</head>
+<body>
+<div class="wrapper">
+<div class="logo">
+<a href="index.html">
+<img class="pure-img" src="assets/images/greensky_logo.png">
+</a>
+<h2 class="logo-subtitle">A blog of one programmer</h2>
+</div>
+
+<nav class="top-navigation">
+<ul>
+<li><a class="nav-card" href="techstack.html">Techstack</a></li>
+<li><a class="nav-card" href="about.html">About</a></li>
+</ul>
+</nav>
+
+<div class="container">
+        <div class="post">
+  <h1>Functional programming in Ruby</h1>
+  <h2 class="subtitle-date">12th of May, 2021</h2>
+  <p>Ruby is a classic Object-Oriented programming language. But it also has some
+functional features built into the language such as <code>map</code>, <code>filter</code> and
+<code>reduce</code>. Here we will explore more functional concepts and how they can be
+used in Ruby.</p>
+<h2>Function</h2>
+<p>First, a quick refresher on what a function is.</p>
+<p>This is a function in mathematical notation:</p>
+<pre><code>f(x, y) = x + y
+</code></pre>
+<p>This is a function in Ruby:</p>
+<pre><code class="language-ruby">def add(a, b)
+  a + b
+end
+</code></pre>
+<p>A function only depends on its arguments, never on external state.</p>
+<p>These are not functions:</p>
+<pre><code class="language-ruby">def time_now
+  Time.now
+end
+
+b = 3
+def add3(a)
+  a + b
+end
+</code></pre>
+<p>but these are:</p>
+<pre><code class="language-ruby">def time_at(timestamp)
+  Time.at(timestamp)
+end
+
+def add3(a)
+  a + 3
+end
+</code></pre>
+<h2>Functions bad!</h2>
+<p><code>ActiveRecord</code> is a Ruby ORM used in Rails. How do we find the user with ID 5?
+There's a method <code>find</code> in <code>ActiveRecord</code>, we can imagine that it is implemented
+as follows:</p>
+<pre><code class="language-ruby">class User
+  def find(id)
+    # Connection is global and set up somewhere else
+    $db_conn.find_by_id(id)
+  end
+end
+
+User.find(5)
+</code></pre>
+<p>Is this functional? No. This is functional:</p>
+<pre><code class="language-ruby">class User
+  def find(db_conn, id)
+    db_conn.find_by_id(id)
+  end
+end
+
+User.find(db_conn, 5)
+</code></pre>
+<p>which is suboptimal at best. This is why we don't always want to use
+functional style in Ruby. But can we do better? Let's try that:</p>
+<pre><code class="language-ruby">class User
+  def find(id, db_conn: $db_conn)
+    db_conn.find_by_id(id)
+  end
+end
+
+User.find(5)
+</code></pre>
+<p>If we don't specify anything but ID, it works same as with global db connection.
+But what it also allows is to test this method with mocks, we
+will use <code>Minitest</code> testing library:</p>
+<pre><code class="language-ruby">require 'minitest/mock'
+
+user_id = 5
+user = User.new(id: user_id, name: &quot;Peter&quot;)
+test_db_conn = Minitest::Mock.new
+test_db_conn.expect(:find_by_id, user, [user_id])
+
+assert_equal User.find(user_id, db_conn: test_db_conn), user
+</code></pre>
+<h2>Templates as functions</h2>
+<p>Rails by default uses templating engine called ERB which can use instance
+variables defined in controller. Let's assume that controller has 2 variables
+defined <code>@id = 5</code> and <code>@name = &quot;Peter&quot;</code>, then we can write a template like so:</p>
+<pre><code class="language-html">&lt;div&gt;
+  Hello from &lt;%= @name %&gt;
+  with ID &lt;%= @id %&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Rails also has a notion of a &quot;partial&quot; which means that a template can be
+included inside another template:</p>
+<pre><code class="language-html">// main.html.erb
+&lt;div&gt;
+  Hello from &lt;%= @name %&gt;
+  &lt;%= render partial: 'id_partial' %&gt;
+&lt;/div&gt;
+
+// _id_partial.html.erb
+with ID &lt;%= @id %&gt;
+</code></pre>
+<p>They both use same instance variables as in the example above. How do we make
+it functional?</p>
+<pre><code class="language-html">// main.html.erb
+&lt;div&gt;
+  Hello from &lt;%= @name %&gt;
+  &lt;%= render partial: 'id_partial', locals: { user_id: @id } %&gt;
+&lt;/div&gt;
+
+// _id_partial.html.erb
+with ID &lt;%= user_id %&gt;
+</code></pre>
+<p>Here <code>_id_partial.html.erb</code> does not directly reference the instance variable
+<code>@id</code> and is a function because this partial doesn't rely on external state.</p>
+
+</div>
+
+</div>
+</div>
+
+<footer class="pure-g">
+<div class="pure-u-1-1 pure-u-sm-1-2">
+<p>Contact me at</p>
+<p>
+          Email: dm.matveyev@pm.me<br>
+          Telegram: @dmitrymatveyev
+</p>
+</div>
+<div class="pure-u-1-1 pure-u-sm-1-2">
+<p>Find me at</p>
+<p>
+<a href="https://github.com/greenfork" target="_blank">
+<img src="assets/images/GitHub-Mark-32px.png">
+</a>
+</p>
+</div>
+</footer>
+
+<script src="assets/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

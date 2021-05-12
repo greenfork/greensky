@@ -44,6 +44,8 @@ func parseMetadata(s: string): Metadata =
     case key
     of "tags":
       result.tags = value.split(", ").sorted
+    of "title":
+      result.title = value
     else:
       raise newException(ParseMetadataError, "Unknown metadata key: "&key)
     index = valueEnd
@@ -129,9 +131,12 @@ proc main() =
       fileContent[metadataEnd ..< fileContent.len],
       config=initGfmConfig()
     )
+    let title =
+      if metadata.title.len > 0: metadata.title
+      else: fileInfo.name.humanize()
     let post = Post(
       path: name,
-      title: fileInfo.name.humanize(),
+      title: title,
       date: formattedDate,
       content: markdown,
       metadata: metadata,
