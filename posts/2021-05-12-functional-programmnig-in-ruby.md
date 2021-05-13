@@ -243,3 +243,113 @@ Let's try to model a user application for our services with the following steps:
 The problem is that the User will not necessarily follow these steps
 sequentially as we described, for example the user can refuse to confirm their
 email until the step 4 or even never confirm it.
+
+Let's try to model this interaction with the condition that the User can only
+confirm their application after they have confirmed their email:
+
+<img class="pure-img" src="assets/images/user_application_fsm.png">
+
+This is the most simple FSM graph. And we can already see clearly all the states
+and draw additional lines in order to know what happens when user presses
+"Cancel" or a network error occurs.
+
+Let's try to implement a part of it in Object-Oriented style:
+
+```ruby
+class UserApplicationFSM
+  attr_reader :state, :data
+
+  def initialize(state = :user, data = {})
+    @state = state
+    @data = data
+  end
+
+  def provide_email(email)
+    case @state
+    when :user
+      @state = :confirmed_user
+      @data[:email] = email
+    else
+      raise 'Incompatible state'
+    end
+  end
+
+  def choose_application(application_id)
+    case @state
+    when :unconfirmed_user
+      @state = :unconfirmed_user_choose_dialog
+      @data[:application_id] = application_id
+    when :confirmed_user
+      @state = :confirmed_user_choose_dialog
+      @data[:application_id] = application_id
+    else
+      raise 'Incompatible state'
+    end
+  end
+
+  # ...
+end
+
+fsm = UserApplicationFSM.new
+fsm.state                          #=> :user
+fsm.provide_email('email@pm.com')
+fsm.state                          #=> :unconfirmed_user
+fsm.choose_application(1)          #=> :unconfirmed_choose_dialog
+```
+
+This works quite well, we have an internal state which keeps track of
+what transitions are available and which data we get back. So what's
+wrong with it?
+
+What if we don't have our `fsm` object all the time? For example, we operate
+on this state across several http requests in a web-server. How do we
+restore the state in the middle of a state machine? We could do it like that:
+```ruby
+fsm = UserApplicationFSM.new
+fsm.provide_email(params[:email])
+session[:state] = fsm.state
+session[:email] = fsm.data[:email]
+
+# Send response
+# Receive application_id
+
+state = session[:state]
+application_id = params[:application_id]
+fsm = UserApplicationFSM.new(state, { email: session[:email] })
+fsm.choose_application(application_id)
+session[:state] = fsm.state
+session[:email] = fsm.data[:email]
+session[:application_id] = fsm.data[:application_id]
+```
+
+This gets hard to manage pretty quickly, we have to use session to store
+intermediate data in order to restore the state of `UserApplicationFSM`.
+A much easier approach is to always supply all the needed state in every
+request. And we can also cheat along the way, as for example, we definitely
+know that we don't need to keep `email` in the state all the time, it is
+already saved into the database. We can as well use this kind of interface:
+```ruby
+state, data = UserApplicationFSM.init
+data[:email] = params[:email]
+state, data = UserApplicationFSM.provide_email(state, data)
+
+# Send response
+# Receive :unconfirmed_user state and application_id
+
+state = params[:state]
+application_id = [:application_id]
+data = { application_id: application_id }
+state, data = UserApplicationFSM.choose_application(state, data)
+```
+
+This is much clearer because we always send `state` and `data` and we always
+receive back `state` and `data`. The implementation of this FSM is left as an
+exercise for the reader.
+
+## Wrap up
+
+These are some general and broad ideas of how to use functional programming
+in Ruby. Not every concept should be designed in functional paradigm, but it
+is a tool that allows you to express ideas more clearly where traditional
+OOP style proves to be too cumbersome to operate on. Use with caution but
+explore with curiosity!

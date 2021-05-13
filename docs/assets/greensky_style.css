@@ -118,7 +118,7 @@ footer {
 }
 code {
   font-family: JetBrainsMono, monospace;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
 }
 a {
   text-decoration: none;
@@ -274,4 +274,12 @@ details {
 .tag-ruby {
   background-color: #fb7587;
   color: #462a05;
+}
+
+.find-me-at {
+  -moz-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
 }
