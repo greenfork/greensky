@@ -202,7 +202,7 @@ class FuncStack
     end
 
     def pop(stack)
-      stack.pop
+      [stack[..-2], stack[-1]]
     end
 
     def peek(stack)
@@ -342,7 +342,7 @@ state, data = UserApplicationFSM.provide_email(state, data)
 # Receive :unconfirmed_user state and application_id
 
 state = params[:state]
-application_id = [:application_id]
+application_id = params[:application_id]
 data = { application_id: application_id }
 state, data = UserApplicationFSM.choose_application(state, data)
 ```
