@@ -68,7 +68,7 @@ User.find(5)
 Is this functional? No. This is functional:
 ```ruby
 class User
-  def find(db_conn, id)
+  def find(db_conn, id)  # db_conn is in argument list now
     db_conn.find_by_id(id)
   end
 end
@@ -80,7 +80,7 @@ which is suboptimal at best. This is why we don't always want to use
 functional style in Ruby. But can we do better? Let's try that:
 ```ruby
 class User
-  def find(id, db_conn: $db_conn)
+  def find(id, db_conn: $db_conn)  # db_conn is an optional argument
     db_conn.find_by_id(id)
   end
 end
@@ -101,6 +101,9 @@ test_db_conn.expect(:find_by_id, user, [user_id])
 
 assert_equal User.find(user_id, db_conn: test_db_conn), user
 ```
+
+This pattern of moving external state to explicit arguments is also called
+"Dependency injection".
 
 ## Templates as functions
 
@@ -128,7 +131,8 @@ with ID <%= @id %>
 ```
 
 They both use same instance variables as in the example above. How do we make
-it functional?
+it functional? Note how we pass variables via `locals: { user_id: @id }` and
+later reference this variable in a partial as just `user_id`:
 ```html
 // main.html.erb
 <div>
@@ -145,7 +149,7 @@ Here `_id_partial.html.erb` does not directly reference the instance variable
 
 ## The problem of state
 
-State - is something that accumulates during program execution. In Ruby it
+State - something that accumulates during program execution. In Ruby it
 is typically contained in instance variables. Let's write a simple stack
 implementation:
 ```ruby
@@ -208,12 +212,13 @@ class FuncStack
 end
 
 st = FuncStack.init
-FuncStack.push(st, 1)
-FuncStack.push(st, 2)
-FuncStack.peek(st)     #=> 2
-st                     #=> [1, 2]
-FuncStack.pop(st)      #=> 2
-st                     #=> [1]
+st = FuncStack.push(st, 1)
+st = FuncStack.push(st, 2)
+FuncStack.peek(st)              #=> 2
+st                              #=> [1, 2]
+st, value = FuncStack.pop(st)
+st                              #=> [1]
+value                           #=> 2
 ```
 
 We don't rely on any external state and explicitly say which stack we want
@@ -267,7 +272,7 @@ class UserApplicationFSM
   def provide_email(email)
     case @state
     when :user
-      @state = :confirmed_user
+      @state = :unconfirmed_user
       @data[:email] = email
     else
       raise 'Incompatible state'
